@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/befree_front/static/css/main.62f76a18.css",
+    "main.js": "/befree_front/static/js/main.cb93ae9f.js",
+    "static/js/787.19e185df.chunk.js": "/befree_front/static/js/787.19e185df.chunk.js",
+    "index.html": "/befree_front/index.html",
+    "main.62f76a18.css.map": "/befree_front/static/css/main.62f76a18.css.map",
+    "main.cb93ae9f.js.map": "/befree_front/static/js/main.cb93ae9f.js.map",
+    "787.19e185df.chunk.js.map": "/befree_front/static/js/787.19e185df.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.62f76a18.css",
+    "static/js/main.cb93ae9f.js"
+  ]
+}
