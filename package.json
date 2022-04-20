@@ -1,6 +1,7 @@
 {
   "name": "befree_front",
   "version": "0.1.0",
+  "homepage": "https://zharikovartem.github.io/befree_front",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
