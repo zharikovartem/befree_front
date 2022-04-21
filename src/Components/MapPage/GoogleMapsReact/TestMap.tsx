@@ -129,7 +129,7 @@ const MapWithADirectionsRenderer = compose(
 
     useEffect(() => {
         console.log('useEffect', props.markersBrand)
-        waitForShowing && setShowingInfoWindow(true) && alert('ok')
+        waitForShowing && setShowingInfoWindow(true)
         setWaitForShowing(false)
     }, [props.markersBrand]);
     
@@ -258,6 +258,7 @@ const MapWithADirectionsRenderer = compose(
                                     markerData={activeBrendObject}
                                     directionsService={props.directionsService}
                                     getRoutes={getRoutes}
+                                    myCoords={props.myCoords}
                                 />
 
                         </InfoWindow>

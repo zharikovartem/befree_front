@@ -23,7 +23,7 @@ const MapCard: React.FC<MapCardPropsType> = (props) => {
     const onNavi = () => {
         console.log('onNavi', props.directionsService);
 
-        const start = new google.maps.LatLng(53.9416614, 27.6870295)
+        const start = new google.maps.LatLng(props.myCoords.lat, props.myCoords.lng)
         const stop = new google.maps.LatLng(props.markerData.address.latitude, props.markerData.address.longitude)
 
         // props.calculateRoute(start, stop, props.directionsService)
@@ -173,6 +173,7 @@ type MapCardPropsType = {
     markerData: any
     directionsService: any
     getRoutes: (routesResp: any) => void
+    myCoords: any
 }
 
 
