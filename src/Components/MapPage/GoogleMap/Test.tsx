@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import './Map.scss';
+// import './Map.scss';
 
 interface IMap {
     mapType: google.maps.MapTypeId;
@@ -45,7 +45,7 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, setDistanceInKm}
 
     const initEventListener = ():void => {
         if (map) {
-            google.maps.event.addListener(map, 'click', function(e) {
+            google.maps.event.addListener(map, 'click', function(e: any) {
                 coordinateToAddress(e.latLng);
             })
         }

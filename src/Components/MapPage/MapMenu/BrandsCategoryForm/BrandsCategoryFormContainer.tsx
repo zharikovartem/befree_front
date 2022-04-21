@@ -10,7 +10,7 @@ type MapDispatchPropsType = {
 }
 
 type OwnBrandsCategoryFormPropsType = {
-    
+    // setCenter()
 }
 
 export type BrandsCategoryFormPropsType = MapPropsType & MapDispatchPropsType & OwnBrandsCategoryFormPropsType

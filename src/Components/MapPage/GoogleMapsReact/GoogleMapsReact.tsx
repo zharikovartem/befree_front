@@ -4,13 +4,19 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper, GoogleAPI, IMapProps, IMarke
 } from 'google-maps-react';
 import { GoogleMapsReactPropsType } from './GoogleMapsReactContainer';
 import MapCard from './MapCard/MapCard';
-import { Button } from 'antd';
+import { Button, Spin } from 'antd';
 import { DirectionsRenderer  } from "react-google-maps";
 import DirectionsRendererComponent from './DirectionsRendererComponent/DirectionsRendererComponent';
 import { BaseThunkType } from '../../../Redux/store';
 import { GeoDataType } from '../../../Redux/mapReducer';
+import { url } from '../../../Api/API';
 
 const apiKey = 'AIzaSyArMpYW9CPdpuWvJwcn7C_1bPSr7aetxnI'
+
+type CoordinatesType = {
+    lat: number
+    lng: number
+}
 
 const GoogleMapsReact: React.FC<GoogleMapsReactPropsType & GoogleApiWrapperPropsType> = (props) => {
 
@@ -25,27 +31,20 @@ const GoogleMapsReact: React.FC<GoogleMapsReactPropsType & GoogleApiWrapperProps
     const [showingInfoWindow, setShowingInfoWindow] = useState<boolean>(false)
     const [directions, setDirections] = useState<google.maps.DirectionsResult[]>()
     const [directionsService, setDirectionsService] = useState<any>()
+    const [myCoords, setMyCoords] = useState<CoordinatesType>()
 
-    const [route, setRoute] = useState<google.maps.DirectionsResult>()
+    useEffect(() => {
+        getLocation()
+    }, []);
 
-    const  calculateRoute2 = (start: GeoDataType, stop: GeoDataType, google: any): BaseThunkType => {
-        return async (dispatch, getState) => {
-            const directionsService = new google.maps.DirectionsService()       
-            const response = await directionsService.route({
-                origin: start,
-                destination: stop,
-                travelMode: google.maps.TravelMode.DRIVING,
-            }, (result: google.maps.DirectionsResult, status: google.maps.DirectionsStatus)=>{
-                if (status === google.maps.DirectionsStatus.OK) {
-                    console.log('calculateRoute result2', result)
-                    setRoute(result)
-                  } else {
-                    console.error(`error fetching directions ${result}`);
-                  }
+    const getLocation = () => {
+        if (!navigator.geolocation) {} else {
+          navigator.geolocation.getCurrentPosition((position) => {
+            setMyCoords({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
             })
-    
-            console.log(response);
-            // dispatch( actions.setRoutes(response) )
+          }, () => {  });
         }
     }
 
@@ -155,6 +154,10 @@ const GoogleMapsReact: React.FC<GoogleMapsReactPropsType & GoogleApiWrapperProps
 
     window.addEventListener('click', memoizedHandleButtonClick )
 
+    if (!myCoords) {
+        return <Spin size="large" />
+    }
+
     return (
         <Map
             // style={{ width: '100%', height: '100%', position: 'relative' }}
@@ -162,7 +165,7 @@ const GoogleMapsReact: React.FC<GoogleMapsReactPropsType & GoogleApiWrapperProps
             zoom={14}
             onClick={onMapClicked}
             onRightclick={onMapRightClicked}
-            initialCenter={{ lat: 53.9416614, lng: 27.6870295 }}
+            initialCenter={myCoords}
             onZoomChanged={onZoomChanged}
             onReady={onReady}
             // onGoogleApiLoaded={({ map, maps }) => apiIsLoaded(map, maps)}
@@ -177,11 +180,16 @@ const GoogleMapsReact: React.FC<GoogleMapsReactPropsType & GoogleApiWrapperProps
             />
 
             {props.brandObjectsList.map((brandObject) => {
+                console.log(brandObject)
                 return (
                     <Marker
                         onClick={(props?: IMarkerProps, marker?: google.maps.Marker, event?: any) => { onMarkerClick(brandObject.id, props, marker, event) }}
                         // label={brandObject.brandInfo.title}
-                        label={brandObject.id.toString()}
+                        // label={brandObject.id.toString()}
+                        icon = {{
+                            url: url+brandObject.brandInfo.category.markerFileName,
+                            scaledSize: new google.maps.Size(45, 50),
+                        }}
                         position={{
                             lat: brandObject.address.latitude,
                             lng: brandObject.address.longitude
@@ -190,7 +198,7 @@ const GoogleMapsReact: React.FC<GoogleMapsReactPropsType & GoogleApiWrapperProps
                 )
             })}
 
-            {activeMarker &&
+            {/* {activeMarker &&
                 <InfoWindow
                     marker={activeMarker}
                     // @ts-ignore
@@ -206,7 +214,7 @@ const GoogleMapsReact: React.FC<GoogleMapsReactPropsType & GoogleApiWrapperProps
                     </div>
 
                 </InfoWindow>
-            }
+            } */}
 
             {/* <DirectionsRendererComponent directionsService={directionsService} routes={props.routes}/> */}
 
@@ -231,14 +239,4 @@ export default GoogleApiWrapper({
 type GoogleApiWrapperPropsType = {
     google: GoogleAPI
     loaded?: boolean
-}
-
-function Foo() {
-    const memoizedHandleClick = useCallback(
-        () => {
-            console.log('Click happened');
-        },
-        [], // Tells React to memoize regardless of arguments.
-    );
-    return <Button onClick={memoizedHandleClick}>Click Me</Button>;
 }

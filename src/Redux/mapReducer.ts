@@ -71,6 +71,7 @@ export const getMyCoordinates = (): ThunkType => {
 
 
 export const calculateRoute = (start: GeoDataType, stop: GeoDataType, google: any): ThunkType => {
+    console.log('calculateRoute')
     return async (dispatch, getState) => {
         const directionsService = new google.maps.DirectionsService()       
         const response = await directionsService.route({

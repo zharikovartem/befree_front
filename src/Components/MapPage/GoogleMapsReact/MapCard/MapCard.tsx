@@ -3,6 +3,9 @@ import React, { useEffect } from 'react'
 import { url } from './../../../../Api/API'
 import { HomeFilled, PhoneFilled, FlagFilled, GlobalOutlined, EditFilled, DownloadOutlined } from '@ant-design/icons'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+import { calculateRoute } from '../../../../Redux/mapReducer'
+import { useDispatch } from 'react-redux'
 // import { MapCardPropsType } from './MapCardContainer'
 
 export const СardButtonsBlock = styled.div`
@@ -11,25 +14,45 @@ export const СardButtonsBlock = styled.div`
     border-radius: 10px;
 `
 
+
+
 const MapCard: React.FC<MapCardPropsType> = (props) => {
 
-    const onCoordinatesCopy = () => {
-        console.log('onCoordinatesCopy', props)
+    // const dispatch = useDispatch()
 
+    const onNavi = () => {
+        console.log('onNavi', props.directionsService);
+
+        const start = new google.maps.LatLng(53.9416614, 27.6870295)
+        const stop = new google.maps.LatLng(props.markerData.address.latitude, props.markerData.address.longitude)
+
+        // props.calculateRoute(start, stop, props.directionsService)
+        // const func = calculateRoute(start, stop, props.directionsService)
+        
+        // const directionsService = new props.directionsService.maps.DirectionsService()
+        const DirectionsService = new google.maps.DirectionsService();      
+        DirectionsService.route({
+            origin: start,
+            destination: stop,
+            travelMode: google.maps.TravelMode.DRIVING,
+        }, (result: google.maps.DirectionsResult, status: google.maps.DirectionsStatus)=>{
+            console.log('calculateRoute result', result)
+            console.log('calculateRoute status', status)
+            props.getRoutes(result)
+        })
     }
-
-    // useEffect(() => {
-    //     props.onCoordinatesCopy()
-    // }, []);
-
-    // console.log(props)
-    // props.foo()
 
     return (
         <>
             <Row>
                 <Col>
-                    <img src={url + props.markerData.brandInfo.logoFileName} />
+                    <img
+                        style={{
+                            height: 70
+                        }}
+                        src={url + props.markerData.brandInfo.logoFileName}
+                        alt=""
+                    />
                 </Col>
                 <Col>
                     <h5>{props.markerData.brandInfo.title}</h5>
@@ -46,7 +69,8 @@ const MapCard: React.FC<MapCardPropsType> = (props) => {
             <DataRow label="Category" data={props.markerData.brandInfo.category.title}
                 // icon={props.markerData.brandInfo.category.logoFileName}
                 icon={<img
-                    className='h-50 mr-2'
+                    style={{ height: 13 }}
+                    className='mr-2'
                     src={url + props.markerData.brandInfo.category.logoFileName}
                 />}
             />
@@ -71,7 +95,8 @@ const MapCard: React.FC<MapCardPropsType> = (props) => {
             </Divider>
             {props.markerData.phoneNumbers.length > 0 &&
                 <DataRow label="Phone"
-                    data={props.markerData.phoneNumbers[0].number}
+                    // data={props.markerData.phoneNumbers[0].number}
+                    data={<a href={'tel:'+props.markerData.phoneNumbers[0].number}>{props.markerData.phoneNumbers[0].number}</a>}
                     icon={<PhoneFilled />}
                 // data={'???'}
                 />
@@ -79,12 +104,12 @@ const MapCard: React.FC<MapCardPropsType> = (props) => {
 
             {props.markerData.brandInfo.link && props.markerData.brandInfo.link !== '#' &&
                 <DataRow
-                    // label="WWW"
-                    data={props.markerData.brandInfo.link}
+                    data={<a href={props.markerData.brandInfo.link}>props.markerData.brandInfo.link</a>}
                     icon={<GlobalOutlined />}
                 />
             }
 
+            {props.markerData.additionalInformation &&
             <Divider
                 orientation="left"
                 className='my-1'
@@ -92,11 +117,13 @@ const MapCard: React.FC<MapCardPropsType> = (props) => {
             >
                 Additional info
             </Divider>
+            &&
             <DataRow
                 // label="WWW"
                 data={props.markerData.additionalInformation}
                 icon={<EditFilled />}
             />
+            }
 
             <СardButtonsBlock>
                 <Button
@@ -110,12 +137,13 @@ const MapCard: React.FC<MapCardPropsType> = (props) => {
                             // @ts-ignore
                             myid={props.markerData.id}
                             className='onCoordinatesCopy'
-                            src="http://localhost:8080//ico_navi/svg/link.svg" alt=""
+                            src={url + "ico_navi/svg/link.svg"} alt=""
                         />
                     }
                     size="large"
                 />
                 <Button
+                    onClick={onNavi}
                     className='mx-3 viewDistance'
                     // @ts-ignore
                     myid={props.markerData.id}
@@ -126,41 +154,43 @@ const MapCard: React.FC<MapCardPropsType> = (props) => {
                             // @ts-ignore
                             myid={props.markerData.id}
                             className='viewDistance'
-                            src="http://localhost:8080/ico_navi/123/to_map.svg"
+                            src={url + "ico_navi/123/to_map.svg"}
                             alt=""
                         />
-                    } 
-                    size="large" 
+                    }
+                    size="large"
                 />
-                <Button className='mx-3' type="primary" shape="circle" icon={<img src="http://localhost:8080/ico_navi/123/to_map.svg" alt="" />} size="large" />
-                <Button className='mx-3' type="default" shape="circle" icon={<img src="http://localhost:8080/ico_navi/svg/navi.svg" alt="" />} size="large" />
+                <Button className='mx-3' type="primary" shape="circle" icon={<img src={url + "ico_navi/123/to_map.svg"} alt="" />} size="large" />
+                <Button onClick={onNavi} className='mx-3' type="default" shape="circle" icon={<img src={url + "ico_navi/svg/navi.svg"} alt="" />} size="large" />
             </СardButtonsBlock>
         </>
-            )
+    )
 }
 
-            export default MapCard
+export default MapCard
 
-            type MapCardPropsType = {
-                markerData: any
+type MapCardPropsType = {
+    markerData: any
+    directionsService: any
+    getRoutes: (routesResp: any) => void
 }
 
 
-            type DataRowType = {
-                label ?: string
-    data: string
-            icon?: JSX.Element
+type DataRowType = {
+    label?: string
+    data: string | JSX.Element
+    icon?: JSX.Element
 }
 
-            export const DataRow: React.FC<DataRowType> = (props) => {
+export const DataRow: React.FC<DataRowType> = (props) => {
     return (
-                <Row className='mx-4 my-1'>
-                    <Col span={2}>
-                        {props.icon && props.icon}
-                    </Col >
-                    <Col span={20}>
-                        {props.label && props.label + ': '} {props.data}
-                    </Col>
-                </Row>
-                )
+        <Row className='mx-4 my-1'>
+            <Col span={2}>
+                {props.icon && props.icon}
+            </Col >
+            <Col span={20}>
+                {props.label && props.label + ': '} {typeof props.data === 'string' ? props.data.replace(/<[^>]+>/g, '') : props.data}
+            </Col>
+        </Row>
+    )
 }

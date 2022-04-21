@@ -1,4 +1,4 @@
-import { Drawer } from 'antd'
+import { Drawer, DrawerProps } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { loadMapApi } from '../../Utils/GoogleMapUtils'
 import GoogleMapPage from './GoogleMap/GoogleMapPageContainer'
@@ -8,11 +8,17 @@ import './MapPage.css'
 import AllBrandsForm from './MapMenu/AllBrandsForm/AllBrandsFormContainer'
 import GoogleMapsReact from './GoogleMapsReact/GoogleMapsReactContainer'
 import BrandsCategoryForm from './MapMenu/BrandsCategoryForm/BrandsCategoryFormContainer'
+import { CloseOutlined } from '@ant-design/icons'
+
+import Map from "./GoogleMapsReact/TestMap";
+
+const api = "AIzaSyArMpYW9CPdpuWvJwcn7C_1bPSr7aetxnI";
 
 const MapPage: React.FC<MapPagePropsType> = (props) => {
 
     const [visible, setVisible] = useState<boolean>(false)
     const [draverIndex, setdraverIndex] = useState<string>()
+    const [size, setSize] = useState<DrawerProps['size']>('large');
 
     const [myCoords, setMyCoords] = useState<google.maps.LatLngLiteral>()
 
@@ -76,7 +82,10 @@ const MapPage: React.FC<MapPagePropsType> = (props) => {
 
                 <div>
                     <Drawer
-                        title="Basic Drawer"
+                        // size={size}
+                        width={400}
+                        // title="Basic Drawer"
+                        title={<CloseOutlined onClick={onClose} />}
                         placement="left"
                         closable={false}
                         onClose={onClose}

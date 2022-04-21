@@ -6,6 +6,9 @@ import { categoryTpe } from '../../../../Redux/categoryReducer';
 
 const AllBrandsForm: React.FC<AllBrandsFormPropsType> = (props) => {
 
+    console.log('AllBrandsForm', props);
+    
+
     const onCheckboxChange = (ev: any) => {
         console.log(ev)
     }
@@ -27,7 +30,7 @@ const AllBrandsForm: React.FC<AllBrandsFormPropsType> = (props) => {
                 onCheckboxChange={onCheckboxChange}
                 category={{
                     id: 0,
-                    logoFileName: '/aside-panel-icon-8.svg',
+                    logoFileName: url+'/aside-panel-icon-8.svg',
                     title: 'ATM'
                 }}
             />
@@ -50,7 +53,7 @@ const FilterRow: React.FC<FilterRowPropsType> = (props) => {
                     props.category.title === 'ATM' ? 
                     <img src={props.category.logoFileName} />
                     : 
-                    <img src={url + props.category.logoFileName} />
+                    <img style={{width: 24, height: 24}} src={url + props.category.logoFileName} />
                 }
                 
             </Col>

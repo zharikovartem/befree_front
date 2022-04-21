@@ -9,9 +9,15 @@ import { HomeFilled } from '@ant-design/icons'
 
 const BrandsCategoryForm: React.FC<BrandsCategoryFormPropsType> = (props) => {
 
+    console.log('BrandsCategoryForm', props);
+    
     useEffect(() => {
         console.log('useEffect')
     }, []);
+
+    const onImageClick = (brendObject: any) => {
+        console.log(brendObject)
+    }
 
     return (
         <div>
@@ -20,13 +26,18 @@ const BrandsCategoryForm: React.FC<BrandsCategoryFormPropsType> = (props) => {
                 return (
                     <div className='m-2 border'>
                         <Row className='m-2'>
-                            <Col span={8}>
-                                <img src={url + brendObject.brandInfo.logoFileName} alt="" />
+                            <Col onClick={()=>{onImageClick(brendObject)}} span={8}>
+                                {brendObject.brandInfo.logoFileName ?
+                                    <img style={{width: '100%', height: 'auto'}} src={url + brendObject.brandInfo.logoFileName} alt="" />
+                                    : 
+                                    <img style={{width: '100%', height: 'auto'}} src={url + '/build/site/images/logo/logo.svg'} alt="" />
+                                }
+                                
                             </Col>
                             <Col span={16}>
                                 <Row>
                                     <Col span={22}>
-                                        <h5>{brendObject.brandInfo.title}</h5>
+                                        <h5 className="text-center">{brendObject.brandInfo.title}</h5>
                                     </Col>
                                     <Col span={2}>
                                         <Row>
@@ -57,17 +68,13 @@ const BrandsCategoryForm: React.FC<BrandsCategoryFormPropsType> = (props) => {
                             icon={<HomeFilled/>}
                         />
 
-                        <button onClick={()=>{
-                                console.log('!!!!!!!!!!')
-                            }}>123</button>
-
                         <СardButtonsBlock className='m-3'>
                             <Button onClick={()=>{
                                 console.log('!!!!!!!!!!')
-                            }} className='mx-2' type="dashed" shape="circle" icon={<img src="http://localhost:8080//ico_navi/svg/link.svg" alt="" />} size="large" />
-                            <Button className='mx-2' type="ghost" shape="circle" icon={<img src="http://localhost:8080/ico_navi/123/to_map.svg" alt="" />} size="large" />
-                            <Button className='mx-2' type="primary" shape="circle" icon={<img src="http://localhost:8080/ico_navi/123/to_map.svg" alt="" />} size="large" />
-                            <Button className='mx-2' type="default" shape="circle" icon={<img src="http://localhost:8080/ico_navi/svg/navi.svg" alt="" />} size="large" />
+                            }} className='mx-2' type="dashed" shape="circle" icon={<img src={url+"ico_navi/svg/link.svg"} alt="" />} size="large" />
+                            <Button className='mx-2' type="ghost" shape="circle" icon={<img src={url+"ico_navi/123/to_map.svg"} alt="" />} size="large" />
+                            <Button className='mx-2' type="primary" shape="circle" icon={<img src={url+"ico_navi/123/to_map.svg"} alt="" />} size="large" />
+                            <Button className='mx-2' type="default" shape="circle" icon={<img src={url+"ico_navi/svg/navi.svg"} alt="" />} size="large" />
                         </СardButtonsBlock>
                     </div>
                 )

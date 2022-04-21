@@ -2,7 +2,11 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import MainContainer from '../../Containers/MainContainer/MainContainer'
 import MainPage from '../Main/MainPage'
+import TestMap from '../MapPage/GoogleMapsReact/TestMap'
 import MapPage from '../MapPage/MapPageContainer'
+import TestMapPage from '../MapPage/TestMapPageContainer'
+
+const api = "AIzaSyArMpYW9CPdpuWvJwcn7C_1bPSr7aetxnI";
 
 const Router: React.FC<RouterPropsType> = (props) => {
 
@@ -17,7 +21,13 @@ const Router: React.FC<RouterPropsType> = (props) => {
                         <Route index element={<>LeagueStandings</>} />
                     </Route> */}
                 </Route>
-                <Route path="/map" element={<MapPage />}>
+                <Route path="/testmap" element={<MapPage />}>
+
+                </Route>
+
+                <Route path="/map" element={
+                    <TestMapPage />
+                }>
 
                 </Route>
             </Routes>

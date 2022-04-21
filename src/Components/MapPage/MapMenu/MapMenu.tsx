@@ -31,14 +31,14 @@ const MapMenu: React.FC<MapMenuPropsType> = (props) => {
                 // theme="dark"
                 inlineCollapsed={collapsed}
             >
-                <Menu.Item
+                {/* <Menu.Item
                     className='mb-4'
                     key="1"
-                    icon={<PieChartOutlined />}
+                    icon={<PieChartOutlined style={{fontSize: 24}}/>}
                     onClick={props.showDrawer}
                 >
                     All
-                </Menu.Item>
+                </Menu.Item> */}
 
 
 
@@ -47,7 +47,7 @@ const MapMenu: React.FC<MapMenuPropsType> = (props) => {
                         <Menu.Item
                             className='mb-2'
                             key={'2-' + category.id}
-                            icon={<img src={url + category.logoFileName} />}
+                            icon={<img style={{width: 24, height: 24}} src={url + category.logoFileName} />}
                             onClick={props.showDrawer}
                         >
                             {category.title}
@@ -57,13 +57,13 @@ const MapMenu: React.FC<MapMenuPropsType> = (props) => {
 
                 <Menu.Item
                     key="3"
-                    icon={<img src={'/aside-panel-icon-8.svg'} />}
+                    icon={<img src={url+'/aside-panel-icon-8.svg'} />}
                     onClick={props.showDrawer}
                     className='mb-4'
                 >
                     ATM
                 </Menu.Item>
-                <Menu.Item
+                {/* <Menu.Item
                     key="4"
                     icon={<PieChartOutlined />}
                     onClick={props.showDrawer}
@@ -76,7 +76,7 @@ const MapMenu: React.FC<MapMenuPropsType> = (props) => {
                     onClick={props.showDrawer}
                 >
                     Like
-                </Menu.Item>
+                </Menu.Item> */}
             </Menu>
 
         </div>

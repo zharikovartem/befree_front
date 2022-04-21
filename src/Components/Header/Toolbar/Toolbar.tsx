@@ -8,6 +8,7 @@ import MenuData from './MenuData/MenuData'
 import CustomSelect from '../../../Elements/Selects/CustomSelect/CustomSelectContainer'
 import styled from 'styled-components'
 import Login from '../../Login/Login'
+import { url } from '../../../Api/API'
 
 const ToolbarLogo = styled.div`
 margin-right: 20px;
@@ -37,7 +38,7 @@ const Toolbar: React.FC<ToolbarPropsType> = (props) => {
                 </div> */}
                 <ToolbarLogo className="toolbar_logo">
                     <Link to="/">
-                        <img src='http://localhost:8080/build/site/images/logo/logo.svg' alt='BeFree' />
+                        <img src={url+'build/site/images/logo/logo.svg'} alt='BeFree' />
                     </Link>
                 </ToolbarLogo>
                 <div className="spacer" />
@@ -46,9 +47,9 @@ const Toolbar: React.FC<ToolbarPropsType> = (props) => {
                     <MenuData />
                 </div>
 
-                <CustomSelect />
+                {/* <CustomSelect /> */}
 
-                <LoginButton 
+                {/* <LoginButton 
                     title='Login' 
                     src='login' 
                     type='modal'
@@ -56,7 +57,7 @@ const Toolbar: React.FC<ToolbarPropsType> = (props) => {
                         title: 'Login'
                     }}
                     modalComponent={Login}
-                />
+                /> */}
 
                 <div className="toggle-btn">
                     <SideMenu click={props.drawerToggleClickHandler} />
