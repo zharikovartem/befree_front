@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { GeoDataType, calculateRoute } from '../../Redux/mapReducer'
 import {getBrendObjectsByBounds, getNearestBrendObjects } from '../../Redux/brendObjectReducer'
 import { AppStateType } from '../../Redux/store'
+import { addSuccess, addError } from '../../Redux/messageReducer'
 //import { AppStateType } from './../Redux/store'
 import TestMapPage from './TestMapPage'
 import { GetBrendObjectsByBoundsParamsType, GetNearestBrendObjectsParamsType } from '../../Api/brendObjectApi'
@@ -12,6 +13,8 @@ type MapDispatchPropsType = {
     calculateRoute: (start: GeoDataType, stop: GeoDataType, directionsService: any) => void
     getBrendObjectsByBounds: (params: GetBrendObjectsByBoundsParamsType) => void
     getNearestBrendObjects: (params: GetNearestBrendObjectsParamsType) => void
+    addSuccess: (value: string) => void
+    addError: (value: string) => void
 }
 
 type OwnTestMapPagePropsType = {
@@ -28,6 +31,6 @@ let mapStateToProps = (state: AppStateType) => {
 }
 
 export default connect<MapPropsType, MapDispatchPropsType, OwnTestMapPagePropsType, AppStateType>(mapStateToProps,
-    { calculateRoute, getBrendObjectsByBounds, getNearestBrendObjects }
+    { calculateRoute, getBrendObjectsByBounds, getNearestBrendObjects, addSuccess, addError }
 )
     (TestMapPage)

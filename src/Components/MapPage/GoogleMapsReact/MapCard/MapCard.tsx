@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { calculateRoute } from '../../../../Redux/mapReducer'
 import { useDispatch } from 'react-redux'
+import { addSuccess } from '../../../../Redux/messageReducer'
 // import { MapCardPropsType } from './MapCardContainer'
 
 export const СardButtonsBlock = styled.div`
@@ -38,21 +39,33 @@ const MapCard: React.FC<MapCardPropsType> = (props) => {
         }, (result: google.maps.DirectionsResult, status: google.maps.DirectionsStatus)=>{
             console.log('calculateRoute result', result)
             console.log('calculateRoute status', status)
-            props.getRoutes(result)
+            if(status === 'OK') {
+                props.getRoutes(result)
+            } else {
+                props.addError('You can not build this route')
+            }
         })
+    }
+
+    const onGetGoogleLink = () => {
+        console.log('onGetGoogleLink')
+        navigator.clipboard.writeText('http://maps.google.com/?ie=UTF8&hq=&ll='+props.markerData.address.latitude+','+props.markerData.address.longitude+'&z=17')
+        props.addSuccess('Data successfully copied to clipboard')
     }
 
     return (
         <>
             <Row>
                 <Col>
-                    <img
-                        style={{
-                            height: 70
-                        }}
-                        src={url + props.markerData.brandInfo.logoFileName}
-                        alt=""
-                    />
+                    {props.markerData.brandInfo.logoFileName &&
+                        <img
+                            style={{
+                                height: 70
+                            }}
+                            src={url + props.markerData.brandInfo.logoFileName}
+                            alt=""
+                        />
+                    }
                 </Col>
                 <Col>
                     <h5>{props.markerData.brandInfo.title}</h5>
@@ -127,6 +140,7 @@ const MapCard: React.FC<MapCardPropsType> = (props) => {
 
             <СardButtonsBlock>
                 <Button
+                    onClick={onGetGoogleLink}
                     className='mx-3 onCoordinatesCopy'
                     // @ts-ignore
                     myid={props.markerData.id}
@@ -174,6 +188,9 @@ type MapCardPropsType = {
     directionsService: any
     getRoutes: (routesResp: any) => void
     myCoords: any
+
+    addSuccess: (error: string) => void
+    addError: (error: string) => void
 }
 
 

@@ -40,7 +40,10 @@ export const actions = {
 
 export const getBrendObjectsByBounds = (params: GetBrendObjectsByBoundsParamsType): ThunkType => {
     return async (dispatch, getState) => {
-        const response = await brendObjectAPI.getBrendObjectsByBounds(params)
+        const categoryFilter = getState().categoryReducer.categoryFilter
+        // params.category = [...categoryFilter]
+        console.log('categoryFilter', categoryFilter)
+        const response = await brendObjectAPI.getBrendObjectsByBounds(params, categoryFilter)
         if (response) {
             dispatch( actions.setBrendObjects(response.data.brandObjects) )
         }

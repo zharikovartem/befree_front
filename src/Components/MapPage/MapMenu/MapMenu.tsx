@@ -25,20 +25,20 @@ const MapMenu: React.FC<MapMenuPropsType> = (props) => {
             }}
         >
             <Menu
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub1']}
+                defaultSelectedKeys={[]}
+                defaultOpenKeys={[]}
                 mode="inline"
                 // theme="dark"
                 inlineCollapsed={collapsed}
             >
-                {/* <Menu.Item
+                <Menu.Item
                     className='mb-4'
                     key="1"
                     icon={<PieChartOutlined style={{fontSize: 24}}/>}
                     onClick={props.showDrawer}
                 >
                     All
-                </Menu.Item> */}
+                </Menu.Item>
 
 
 

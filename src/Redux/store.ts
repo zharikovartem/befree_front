@@ -3,12 +3,14 @@ import thunkMiddleware, {ThunkAction} from "redux-thunk"
 import brendObjectReducer from "./brendObjectReducer"
 import categoryReducer from "./categoryReducer"
 import mapReducer from "./mapReducer"
+import messageReducer from "./messageReducer"
 
 
 let rootReducer = combineReducers({
     mapReducer: mapReducer,
     categoryReducer: categoryReducer,
-    brendObjectReducer: brendObjectReducer
+    brendObjectReducer: brendObjectReducer,
+    messageReducer: messageReducer
 })
 
 type rootReducerType = typeof rootReducer

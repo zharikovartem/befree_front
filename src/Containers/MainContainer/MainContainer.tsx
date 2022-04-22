@@ -17,7 +17,8 @@ export type MainPropsType = MapPropsType & MapDispatchPropsType & OwnMainPropsTy
 
 let mapStateToProps = (state: AppStateType) => {
     return {
-        
+        error: state.messageReducer.error,
+        success: state.messageReducer.success
     }
 }
 

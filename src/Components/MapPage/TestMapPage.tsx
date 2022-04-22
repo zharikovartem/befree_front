@@ -71,13 +71,19 @@ const TestMapPage: React.FC<TestMapPagePropsType> = (props) => {
                     containerElement={<div style={{ height: `93vh` }} />}
                     mapElement={<div style={{ height: `100%`, width: `100%`, position: `inherit` }} />}
                     pathCoordinates={routes}
-                    myCoords={myCoords}
+                    // myCoords={myCoords}
+                    myCoords={{
+                        lat: 40.7222034,
+                        lng: -74.0475331
+                    }}
                     calculateRoute={props.calculateRoute}
                     getBrendObjectsByBounds={props.getBrendObjectsByBounds}
                     markersBrand={props.markers}
                     getRoutes={getRoutes}
                     isDrawerVisible={isDrawerVisible}
                     getDawerVisible={getDawerVisible}
+                    addSuccess={props.addSuccess}
+                    addError={props.addError}
                 />
                 </div>
             </div>

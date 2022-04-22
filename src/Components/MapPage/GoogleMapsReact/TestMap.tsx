@@ -25,6 +25,10 @@ const MapWithADirectionsRenderer = compose(
     withScriptjs,
     withGoogleMap,
     lifecycle({
+        componentDidMount() {
+
+        },
+
         componentWillMount() {
             const refs = {}
 
@@ -124,14 +128,47 @@ const MapWithADirectionsRenderer = compose(
     const [showingInfoWindow, setShowingInfoWindow] = useState<boolean>(false)
     const [activeBrendObject, setActiveBrendObject] = useState<any>()
     const [center, setCenter] = useState<any>(props.myCoords)
+    const [redrendObjects, setRedrendObjects] = useState<any[]>(props.markersBrand)
+
+    const [requests, setRequests] = useState<number>(0)
 
     const [waitForShowing, setWaitForShowing] = useState<boolean>(false)
+
+    console.log('??? props', props)
+
+    useEffect(() => {
+        console.log('useEffect props', {...props})
+        props.onBoundsChanged()
+    }, []);
 
     useEffect(() => {
         console.log('useEffect', props.markersBrand)
         waitForShowing && setShowingInfoWindow(true)
         setWaitForShowing(false)
+
+        if(requests !== 0) {
+            setRequests(requests-1)
+        }
+
+        // заполняем отрендеренные обьекты
+        // let newRedrendObjects: any[] = []
+        // props.markersBrand.map( (item: any) => {
+        //     const check = redrendObjects.filter((obj: any) => {
+        //         return item.id === obj.id
+        //     })
+        //     if(check.length === 0) newRedrendObjects.push(item)
+        // })
+        // newRedrendObjects.length !== 0 && setRedrendObjects([...redrendObjects.concat(newRedrendObjects)])
+
     }, [props.markersBrand]);
+
+    const onBoundsChanged = (from: string) => {
+        console.log('!!!requests ++ ('+from+')')
+        setRequests(requests+1)
+        props.onBoundsChanged()
+    }
+
+    console.log('!!!requests', requests)
     
 
     // const map2 = useGoogleMap()
@@ -140,14 +177,13 @@ const MapWithADirectionsRenderer = compose(
         alert('You\'re here')
     }
 
-    const onMapBoundsChanged = () => {
-        console.log('onMapBoundsChanged', props.bounds);
-        props.onBoundsChanged()
-    }
+    
 
     const onMarkerClick = (id: number) => {
+        console.log('onMarkerClick')
         const targetBrendObject = props.markersBrand.filter((brandObject: any) => brandObject.id === id)[0]
         if (targetBrendObject) {
+            showingInfoWindow && setShowingInfoWindow(false)
             const newCenter = {
                 lat: parseFloat(targetBrendObject.address.latitude),
                 lng: parseFloat(targetBrendObject.address.longitude),
@@ -158,6 +194,8 @@ const MapWithADirectionsRenderer = compose(
             
             setActiveBrendObject(targetBrendObject)
             setWaitForShowing(true)
+            // props.onBoundsChanged()
+            onBoundsChanged('onMarkerClick')
         }
     }
 
@@ -182,6 +220,24 @@ const MapWithADirectionsRenderer = compose(
         props.getRoutes(routesResp)
     }
 
+    const onDragStart = () => {
+        console.log('onDragStart')
+        setShowingInfoWindow(false)
+    }
+
+    const onDragEnd = () => {
+        console.log('onDragEnd', props.bounds);
+        // props.onBoundsChanged()
+        onBoundsChanged('onDragEnd')
+    }
+
+    const onZoomChanged = () => {
+        console.log('onZoomChanged', props.bounds);
+        setShowingInfoWindow(false)
+        // props.onBoundsChanged()
+        onBoundsChanged('onZoomChanged')
+    }
+
     return <>
         <GoogleMap
             defaultZoom={14}
@@ -189,7 +245,10 @@ const MapWithADirectionsRenderer = compose(
             center={center}
             // onZoomChanged={onZoomChanged}
             // @ts-ignore
-            onBoundsChanged={onMapBoundsChanged}
+            // onBoundsChanged={onMapBoundsChanged}
+            onDragStart={onDragStart}
+            onDragEnd={onDragEnd}
+            onZoomChanged={onZoomChanged}
             // ref={mapRef}
 
             ref={props.onMapMounted}
@@ -207,11 +266,7 @@ const MapWithADirectionsRenderer = compose(
                 />
 
                 {props.markersBrand.map((brandObject: any) => {
-                    console.log('brandObject', brandObject)
-                    console.log('latitude', brandObject.address.latitude)
-                    // const position = {
-
-                    // }
+                    console.log(brandObject.id, brandObject)
                     return (
                         <Marker
                             onClick={() => { onMarkerClick(brandObject.id) }}
@@ -259,6 +314,8 @@ const MapWithADirectionsRenderer = compose(
                                     directionsService={props.directionsService}
                                     getRoutes={getRoutes}
                                     myCoords={props.myCoords}
+                                    addSuccess={props.addSuccess}
+                                    addError={props.addError}
                                 />
 
                         </InfoWindow>
@@ -266,8 +323,6 @@ const MapWithADirectionsRenderer = compose(
 
             </>
         </GoogleMap>
-        {console.log('???', props)}
-
     </>
 });
 
