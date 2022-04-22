@@ -33,7 +33,8 @@ const AllBrandsForm: React.FC<AllBrandsFormPropsType> = (props) => {
                     <FilterRow 
                         onCheckboxChange={onCheckboxChange}
                         category={category}
-                        isActive={selectedCategoryIds.length === 0 ? true : selectedCategoryIds.includes( category.id )}
+                        // isActive={selectedCategoryIds.length === 0 ? true : selectedCategoryIds.includes( category.id )}
+                        isActive={selectedCategoryIds.includes( category.id )}
                     />
                 )
             })}

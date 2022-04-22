@@ -11,9 +11,15 @@ const TestMapPage: React.FC<TestMapPagePropsType> = (props) => {
     const [routes, setRoutes] = useState<any>()
     const [isDrawerVisible, setIsDrawerVisible] = useState<false | string>(false)
 
+    const [needToCloseAll, setNeedToCloseAll] = useState<boolean>(false)
+
     useEffect(() => {
         getLocation()
     }, []);
+
+    useEffect(() => {
+        console.log('console.log(params);', props)
+    }, [props]);
 
     const getLocation = () => {
         if (!navigator.geolocation) { } else {
@@ -32,6 +38,7 @@ const TestMapPage: React.FC<TestMapPagePropsType> = (props) => {
     }
 
     const showDrawer = (ev: any) => {
+        // setNeedToCloseAll(true)
         if (isDrawerVisible) {
             setIsDrawerVisible(false)
         } else {
@@ -51,8 +58,9 @@ const TestMapPage: React.FC<TestMapPagePropsType> = (props) => {
                 isAtm: ev.key === '3'
             })
         }
-        
+        // setNeedToCloseAll(false)
     }
+
 
     const getDawerVisible = (isDrawerVisible: false | string) => {
         setIsDrawerVisible(isDrawerVisible)
@@ -84,6 +92,7 @@ const TestMapPage: React.FC<TestMapPagePropsType> = (props) => {
                     getDawerVisible={getDawerVisible}
                     addSuccess={props.addSuccess}
                     addError={props.addError}
+                    // needToCloseAll={needToCloseAll}
                 />
                 </div>
             </div>

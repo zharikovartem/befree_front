@@ -115,13 +115,25 @@ const MapWithADirectionsRenderer = compose(
         },
 
         componentWillUpdate() {
-            console.log('componentWillUpdate');
+            // console.log('!!!componentWillUpdate', this.props);
+            // console.log('componentWillUpdate', this.state);
+            // // @ts-ignore
+            // if(!this.state.needToCloseAll) {
+            //     this.setState({
+            //         needToCloseAll: false
+            //     })
+            // }
         },
 
         componentDidUpdate() {
-            
+            console.log('!!!componentDidUpdate')
+            // @ts-ignore
+            // if(!this.state.needToCloseAll === undefined) {
+            //     this.setState({
+            //         needToCloseAll: true
+            //     })
+            // }
 
-            
 
             // @ts-ignore
             if (this.props.pathCoordinates && !this.state.tryRoute) {
@@ -129,7 +141,8 @@ const MapWithADirectionsRenderer = compose(
                 this.setState({
                     tryRoute: true,
                     // @ts-ignore
-                    directions: this.props.pathCoordinates
+                    directions: this.props.pathCoordinates,
+                    // needToCloseAll: false
                 });
             }
         }
@@ -140,24 +153,19 @@ const MapWithADirectionsRenderer = compose(
     const [showingInfoWindow, setShowingInfoWindow] = useState<boolean>(false)
     const [activeBrendObject, setActiveBrendObject] = useState<any>()
     const [center, setCenter] = useState<any>(props.myCoords)
-    const [redrendObjects, setRedrendObjects] = useState<any[]>(props.markersBrand)
-
     const [requests, setRequests] = useState<number>(0)
-
     const [waitForShowing, setWaitForShowing] = useState<boolean>(false)
-    const [startLoading, setStartLoading] = useState<boolean>(true)
 
-    console.log('??? props', props)
+    console.log('??? props', {...props})
+    // if (props.needToCloseAll) {
+    //     console.log('??? props')
+    //     setShowingInfoWindow(false)
+    // }
 
     // useEffect(() => {
-    //     console.log('useEffect props', {...props})
-    //     if (props.bounds && startLoading) {
-    //         props.onBoundsChanged()
-    //         setStartLoading(false)
-    //         setCenter(center)
-    //     }
-        
-    // }, [props.bounds]);
+    //     console.log('useEffect needToCloseAll')
+    //     props.needToCloseAll && setShowingInfoWindow(false)
+    // }, [props.needToCloseAll]);
 
     useEffect(() => {
         console.log('useEffect', props.markersBrand)
@@ -187,6 +195,7 @@ const MapWithADirectionsRenderer = compose(
     }
 
     console.log('!!!requests', requests)
+    // setShowingInfoWindow(false)
     
 
     // const map2 = useGoogleMap()
@@ -284,7 +293,7 @@ const MapWithADirectionsRenderer = compose(
                 />
 
                 {props.markersBrand.map((brandObject: any) => {
-                    console.log(brandObject.id, brandObject)
+                    // console.log(brandObject.id, brandObject)
                     return (
                         <Marker
                             onClick={() => { onMarkerClick(brandObject.id) }}
@@ -307,7 +316,11 @@ const MapWithADirectionsRenderer = compose(
                     />
                 }
 
-                {showingInfoWindow &&
+                {/* {console.log('showingInfoWindow', props.needToCloseAll)} */}
+                {
+                    // !props.needToCloseAll &&
+                    !props.isDrawerVisible &&
+                    showingInfoWindow && 
                         <InfoWindow
                             position={{
                                 lat: parseFloat(activeBrendObject.address.latitude),
