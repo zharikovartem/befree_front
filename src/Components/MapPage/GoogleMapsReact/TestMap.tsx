@@ -249,13 +249,14 @@ const MapWithADirectionsRenderer = compose(
 
     const onDragStart = () => {
         console.log('onDragStart')
-        setShowingInfoWindow(false)
+        // setShowingInfoWindow(false)
     }
 
     const onDragEnd = () => {
         console.log('onDragEnd', props.bounds);
         // props.onBoundsChanged()
         onBoundsChanged('onDragEnd')
+        // setShowingInfoWindow(true)
     }
 
     const onZoomChanged = () => {
@@ -263,6 +264,10 @@ const MapWithADirectionsRenderer = compose(
         setShowingInfoWindow(false)
         // props.onBoundsChanged()
         onBoundsChanged('onZoomChanged')
+    }
+
+    const onInfoWindowPositionChanged = () => {
+        console.log('onInfoWindowPositionChanged')
     }
 
     return <>
@@ -316,28 +321,31 @@ const MapWithADirectionsRenderer = compose(
                     />
                 }
 
-                {/* {console.log('showingInfoWindow', props.needToCloseAll)} */}
+                {console.log('InfoWindow', {...props})}
+                {console.log('showingInfoWindow', showingInfoWindow)}
                 {
                     // !props.needToCloseAll &&
                     !props.isDrawerVisible &&
                     showingInfoWindow && 
                         <InfoWindow
+                            // onDefaultViewportChanged={onDefaultViewportChanged}
                             position={{
                                 lat: parseFloat(activeBrendObject.address.latitude),
                                 lng: parseFloat(activeBrendObject.address.longitude)
                             }}
+                            onPositionChanged={onInfoWindowPositionChanged}
                             onCloseClick={onInfoWindowClose}
                             onDomReady={onDomReady}
-                            options={{
-                                content:"<span class='wtf'>WTF</span>",
-                                position: {
-                                    // lat: 200,
-                                    // lng: 200
-                                    lat: parseFloat(activeBrendObject.address.latitude),
-                                    lng: parseFloat(activeBrendObject.address.longitude)
-                                },
-                                // pixelOffset: null
-                            }}
+                            // options={{
+                            //     content:"<span class='wtf'>WTF</span>",
+                            //     position: {
+                            //         // lat: 200,
+                            //         // lng: 200
+                            //         lat: parseFloat(activeBrendObject.address.latitude),
+                            //         lng: parseFloat(activeBrendObject.address.longitude)
+                            //     },
+                            //     // pixelOffset: null
+                            // }}
                             // options={{disableAutoPan: true}}
                         >
                                 <MapCard
