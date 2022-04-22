@@ -26,10 +26,22 @@ const MapWithADirectionsRenderer = compose(
     withGoogleMap,
     lifecycle({
         componentDidMount() {
-
+            // console.log('!!!componentDidMount', this.state)
+            // @ts-ignore
+            !this.state.bounds && this.props.getBrendObjectsByBounds({
+                // @ts-ignore
+                lngMin: parseFloat(this.props.myCoords.lng)-0.04,
+                // @ts-ignore
+                lngMax: parseFloat(this.props.myCoords.lng)+0.04,
+                // @ts-ignore
+                latMin: parseFloat(this.props.myCoords.lat)-0.04,
+                // @ts-ignore
+                latMax: parseFloat(this.props.myCoords.lat)+0.04
+            })
         },
 
         componentWillMount() {
+            console.log('!!!componentWillMount')
             const refs = {}
 
             this.setState({
@@ -133,13 +145,19 @@ const MapWithADirectionsRenderer = compose(
     const [requests, setRequests] = useState<number>(0)
 
     const [waitForShowing, setWaitForShowing] = useState<boolean>(false)
+    const [startLoading, setStartLoading] = useState<boolean>(true)
 
     console.log('??? props', props)
 
-    useEffect(() => {
-        console.log('useEffect props', {...props})
-        props.onBoundsChanged()
-    }, []);
+    // useEffect(() => {
+    //     console.log('useEffect props', {...props})
+    //     if (props.bounds && startLoading) {
+    //         props.onBoundsChanged()
+    //         setStartLoading(false)
+    //         setCenter(center)
+    //     }
+        
+    // }, [props.bounds]);
 
     useEffect(() => {
         console.log('useEffect', props.markersBrand)
