@@ -8,11 +8,8 @@ import {
     Marker,
     InfoWindow
 } from "react-google-maps";
-
-
-import { GoogleMap as GoogleMapApi, useJsApiLoader } from '@react-google-maps/api'
 import MapMenu from "../MapMenu/MapMenuContainer";
-import { Col, Drawer, Row } from "antd";
+import { notification } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import MapMenuDrower from "./MapMenuDrower/MapMenuDrower";
 import { IMapProps, IMarkerProps } from "google-maps-react";
@@ -30,13 +27,13 @@ const MapWithADirectionsRenderer = compose(
             // @ts-ignore
             !this.state.bounds && this.props.getBrendObjectsByBounds({
                 // @ts-ignore
-                lngMin: parseFloat(this.props.myCoords.lng)-0.04,
+                lngMin: parseFloat(this.props.myCoords.lng) - 0.04,
                 // @ts-ignore
-                lngMax: parseFloat(this.props.myCoords.lng)+0.04,
+                lngMax: parseFloat(this.props.myCoords.lng) + 0.04,
                 // @ts-ignore
-                latMin: parseFloat(this.props.myCoords.lat)-0.04,
+                latMin: parseFloat(this.props.myCoords.lat) - 0.04,
                 // @ts-ignore
-                latMax: parseFloat(this.props.myCoords.lat)+0.04
+                latMax: parseFloat(this.props.myCoords.lat) + 0.04
             })
         },
 
@@ -67,10 +64,10 @@ const MapWithADirectionsRenderer = compose(
 
                     // @ts-ignore
                     const bounds: google.maps.LatLngBounds | null | undefined = refs.map.getBounds()
-                   
+
 
                     setTimeout(() => {
-                         // @ts-ignore
+                        // @ts-ignore
                         this.props.getBrendObjectsByBounds({
                             lngMin: bounds ? bounds.getSouthWest().lng() : 0,
                             lngMax: bounds ? bounds.getNorthEast().lng() : 0,
@@ -78,7 +75,7 @@ const MapWithADirectionsRenderer = compose(
                             latMax: bounds ? bounds.getNorthEast().lat() : 0
                         })
                     }, 100);
-                    
+
                 },
                 // @ts-ignore
                 onSearchBoxMounted: ref => {
@@ -126,15 +123,13 @@ const MapWithADirectionsRenderer = compose(
         },
 
         componentDidUpdate() {
-            console.log('!!!componentDidUpdate')
+            console.log('!!!componentDidUpdate', this.props)
+            console.log('!!!componentDidUpdate', this.state)
             // @ts-ignore
-            // if(!this.state.needToCloseAll === undefined) {
-            //     this.setState({
-            //         needToCloseAll: true
-            //     })
-            // }
-
-
+            console.log('!!!', this.props.pathCoordinates)
+            // @ts-ignore
+            console.log('!!!', !this.state.tryRoute)
+            
             // @ts-ignore
             if (this.props.pathCoordinates && !this.state.tryRoute) {
                 console.log('componentDidUpdate', this.props);
@@ -144,7 +139,25 @@ const MapWithADirectionsRenderer = compose(
                     directions: this.props.pathCoordinates,
                     // needToCloseAll: false
                 });
+            } 
+
+            // @ts-ignore
+            if (this.props.pathCoordinates === undefined && this.state.tryRoute) {
+                console.log(this.props)
+                this.setState({
+                    tryRoute: false,
+                    // @ts-ignore
+                    directions: false,
+                    // needToCloseAll: false
+                });
             }
+            // else {
+            //     // @ts-ignore
+            //     if(!this.state.tryRoute) this.setState({
+            //         // @ts-ignore
+            //         directions: false,
+            //     });
+            // }
         }
     })
 )((props: any) => {
@@ -155,48 +168,44 @@ const MapWithADirectionsRenderer = compose(
     const [center, setCenter] = useState<any>(props.myCoords)
     const [requests, setRequests] = useState<number>(0)
     const [waitForShowing, setWaitForShowing] = useState<boolean>(false)
+    const [isNotificationOpen, setIsNotificationOpen] = useState<boolean>(false)
+    // const [isDirections, setIsDirections] = useState<boolean>(!!props.directions)
+    const [directions, setDirections] = useState<any>(props.directions)
 
-    console.log('??? props', {...props})
-    // if (props.needToCloseAll) {
-    //     console.log('??? props')
-    //     setShowingInfoWindow(false)
-    // }
+    console.log('state directions: ', directions)
+
+    useEffect(() => {
+        console.log('!!props.directions', props.directions)
+        if (props.directions !== undefined) {
+            console.log('+++')
+            setDirections(props.directions)
+        }
+    }, [props.directions]);
+
+    // console.log('??? props', { ...props })
 
     // useEffect(() => {
-    //     console.log('useEffect needToCloseAll')
-    //     props.needToCloseAll && setShowingInfoWindow(false)
-    // }, [props.needToCloseAll]);
+    //     openNotification()
+    // }, []);
 
     useEffect(() => {
         console.log('useEffect', props.markersBrand)
         waitForShowing && setShowingInfoWindow(true)
         setWaitForShowing(false)
-
-        if(requests !== 0) {
-            setRequests(requests-1)
+        if (requests !== 0) {
+            setRequests(requests - 1)
         }
-
-        // заполняем отрендеренные обьекты
-        // let newRedrendObjects: any[] = []
-        // props.markersBrand.map( (item: any) => {
-        //     const check = redrendObjects.filter((obj: any) => {
-        //         return item.id === obj.id
-        //     })
-        //     if(check.length === 0) newRedrendObjects.push(item)
-        // })
-        // newRedrendObjects.length !== 0 && setRedrendObjects([...redrendObjects.concat(newRedrendObjects)])
-
     }, [props.markersBrand]);
 
     const onBoundsChanged = (from: string) => {
-        console.log('!!!requests ++ ('+from+')')
-        setRequests(requests+1)
+        console.log('!!!requests ++ (' + from + ')')
+        setRequests(requests + 1)
         props.onBoundsChanged()
     }
 
     console.log('!!!requests', requests)
     // setShowingInfoWindow(false)
-    
+
 
     // const map2 = useGoogleMap()
 
@@ -204,7 +213,7 @@ const MapWithADirectionsRenderer = compose(
         alert('You\'re here')
     }
 
-    
+
 
     const onMarkerClick = (id: number) => {
         console.log('onMarkerClick')
@@ -218,7 +227,7 @@ const MapWithADirectionsRenderer = compose(
             console.log('newCenter', newCenter)
 
             setCenter(newCenter)
-            
+
             setActiveBrendObject(targetBrendObject)
             setWaitForShowing(true)
             // props.onBoundsChanged()
@@ -270,6 +279,43 @@ const MapWithADirectionsRenderer = compose(
         console.log('onInfoWindowPositionChanged')
     }
 
+    const onNotificationClick = () => {
+        console.log('onNotificationClick directions', {...directions})
+        console.log('onNotificationClick props', props)
+
+        let directionsCopy = {...directions}
+        directionsCopy.routes = []
+        console.log(directionsCopy)
+        // props.clearDirections()
+        // setIsDirections(false)
+        setDirections({
+            ...props.directions,
+            routes: []
+        })
+    }
+
+    const openNotification = () => {
+        notification.open({
+            top: undefined,
+            message: 'Notification Title',
+            description:
+                'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+            onClick: onNotificationClick,
+            duration: 0,
+        });
+    }
+
+    if (props.directions) {
+        if (!isNotificationOpen) {
+            setIsNotificationOpen(true)
+            openNotification()
+        }
+    }
+
+    const onDirectionsChanged = () => {
+        console.log('onDirectionsChanged')
+    }
+
     return <>
         <GoogleMap
             defaultZoom={14}
@@ -285,7 +331,7 @@ const MapWithADirectionsRenderer = compose(
 
             ref={props.onMapMounted}
         >
-            <MapMenuDrower 
+            <MapMenuDrower
                 isDrawerVisible={props.isDrawerVisible}
                 getDawerVisible={props.getDawerVisible}
             />
@@ -315,50 +361,46 @@ const MapWithADirectionsRenderer = compose(
                 })}
 
                 {
-                    props.directions &&// console.log('!!!!!!!!', props.directions) &&
+                    props.directions && // console.log('!!!!!!!!', isDirections) &&
+                    // isDirections &&
                     <DirectionsRenderer
-                        directions={props.directions}
+                        directions={directions}
+                        // onDirectionsChanged={onDirectionsChanged}
+                        options={{
+                            draggable: true, 
+                            // @ts-ignore
+                            // panel: <div>panel</div>
+                            suppressInfoWindows: true
+                        }}
                     />
                 }
 
-                {console.log('InfoWindow', {...props})}
+                {console.log('InfoWindow', { ...props })}
                 {console.log('showingInfoWindow', showingInfoWindow)}
                 {
                     // !props.needToCloseAll &&
                     !props.isDrawerVisible &&
-                    showingInfoWindow && 
-                        <InfoWindow
-                            // onDefaultViewportChanged={onDefaultViewportChanged}
-                            position={{
-                                lat: parseFloat(activeBrendObject.address.latitude),
-                                lng: parseFloat(activeBrendObject.address.longitude)
-                            }}
-                            onPositionChanged={onInfoWindowPositionChanged}
-                            onCloseClick={onInfoWindowClose}
-                            onDomReady={onDomReady}
-                            // options={{
-                            //     content:"<span class='wtf'>WTF</span>",
-                            //     position: {
-                            //         // lat: 200,
-                            //         // lng: 200
-                            //         lat: parseFloat(activeBrendObject.address.latitude),
-                            //         lng: parseFloat(activeBrendObject.address.longitude)
-                            //     },
-                            //     // pixelOffset: null
-                            // }}
-                            // options={{disableAutoPan: true}}
-                        >
-                                <MapCard
-                                    markerData={activeBrendObject}
-                                    directionsService={props.directionsService}
-                                    getRoutes={getRoutes}
-                                    myCoords={props.myCoords}
-                                    addSuccess={props.addSuccess}
-                                    addError={props.addError}
-                                />
+                    showingInfoWindow &&
+                    <InfoWindow
+                        position={{
+                            lat: parseFloat(activeBrendObject.address.latitude),
+                            lng: parseFloat(activeBrendObject.address.longitude)
+                        }}
+                        onPositionChanged={onInfoWindowPositionChanged}
+                        onCloseClick={onInfoWindowClose}
+                        onDomReady={onDomReady}
+                    >
+                        <MapCard
+                            markerData={activeBrendObject}
+                            directionsService={props.directionsService}
+                            getRoutes={getRoutes}
+                            myCoords={props.myCoords}
+                            addSuccess={props.addSuccess}
+                            addError={props.addError}
+                        />
 
-                        </InfoWindow>
-                    }
+                    </InfoWindow>
+                }
 
             </>
         </GoogleMap>

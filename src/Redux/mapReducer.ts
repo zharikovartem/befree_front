@@ -51,7 +51,7 @@ const mapReducer = (state = initialState, action: ActionsType): InitialStateType
 export const actions = {
     setMyCoordinates: (coordinates: CoordinatesType) => ({type: 'MAP/SET_MY_COORDINATES', coordinates} as const),
     setGoogleMap: (google: GoogleAPI) => ({type: 'MAP/SET_GOOGLE_MAP', google} as const),
-    setRoutes: (routes: google.maps.DirectionsResult) => ({type: 'MAP/SET_ROUTES', routes} as const),
+    setRoutes: (routes: google.maps.DirectionsResult| undefined) => ({type: 'MAP/SET_ROUTES', routes} as const),
 }
 
 export const getMyCoordinates = (): ThunkType => {
@@ -68,7 +68,11 @@ export const getMyCoordinates = (): ThunkType => {
     }
 }
 
-
+export const clearRoutes = (): ThunkType => {
+    return async (dispatch, getState) => {
+        dispatch( actions.setRoutes(undefined) )
+    }
+}
 
 export const calculateRoute = (start: GeoDataType, stop: GeoDataType, google: any): ThunkType => {
     console.log('calculateRoute')

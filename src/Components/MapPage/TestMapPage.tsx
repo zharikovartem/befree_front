@@ -66,6 +66,12 @@ const TestMapPage: React.FC<TestMapPagePropsType> = (props) => {
         setIsDrawerVisible(isDrawerVisible)
     }
 
+    const clearDirections = () => {
+        console.log('clearDirections')
+        // props.clearRoutes()
+        getRoutes(undefined)
+    }
+
     return (
         <>
             <div className='d-flex'>
@@ -93,6 +99,7 @@ const TestMapPage: React.FC<TestMapPagePropsType> = (props) => {
                     addSuccess={props.addSuccess}
                     addError={props.addError}
                     // needToCloseAll={needToCloseAll}
+                    clearDirections={clearDirections}
                 />
                 </div>
             </div>
