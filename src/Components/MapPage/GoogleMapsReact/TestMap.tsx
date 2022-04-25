@@ -196,7 +196,7 @@ const MapWithADirectionsRenderer = compose(
     // const [isDirections, setIsDirections] = useState<boolean>(!!props.directions)
     const [directions, setDirections] = useState<any>(props.directions)
 
-    console.log('state directions: ', directions)
+    console.log('???!!!: ', props.markersBrand)
 
     useEffect(() => {
         console.log('!!props.directions', props.directions)
@@ -375,7 +375,7 @@ const MapWithADirectionsRenderer = compose(
                 />
 
                 {props.markersBrand.map((brandObject: any) => {
-                    // console.log(brandObject.id, brandObject)
+                    console.log('???', brandObject.id, brandObject)
                     return (
                         <Marker
                             onClick={() => { onMarkerClick(brandObject.id) }}

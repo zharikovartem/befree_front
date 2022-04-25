@@ -55,14 +55,15 @@ const MapMenu: React.FC<MapMenuPropsType> = (props) => {
                     )
                 })}
 
-                <Menu.Item
+                {/* <Menu.Item
                     key="3"
                     icon={<img src={url+'/aside-panel-icon-8.svg'} />}
                     onClick={props.showDrawer}
                     className='mb-4'
                 >
                     ATM
-                </Menu.Item>
+                </Menu.Item> */}
+
                 {/* <Menu.Item
                     key="4"
                     icon={<PieChartOutlined />}

@@ -4,13 +4,20 @@ import { AllBrandsFormPropsType } from './AllBrandsFormContainer'
 import { Checkbox, Col, List, Row, Typography } from 'antd';
 import { categoryTpe } from '../../../../Redux/categoryReducer';
 
+const setSelectedCategoryIdsInit = (categoryesList: any[] | null, categoryFilter: number[]) => {
+    if(categoryFilter && categoryFilter.length !== 0) {
+        return categoryFilter
+    } else {
+        if (categoryesList) {
+            return  categoryesList.length !== 0 ? categoryesList.map( (cat) => cat.id) : []
+        }
+        return []
+    }
+}
+
 const AllBrandsForm: React.FC<AllBrandsFormPropsType> = (props) => {
 
-    const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>(props.categoryesList && props.categoryesList.length !== 0 ?
-            props.categoryesList.map( (cat) => cat.id)
-        :
-            []
-        )
+    const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>(setSelectedCategoryIdsInit(props.categoryesList, props.categoryFilter))
 
     useEffect(() => {
         props.changeCategoryFilter(selectedCategoryIds)
@@ -44,7 +51,7 @@ const AllBrandsForm: React.FC<AllBrandsFormPropsType> = (props) => {
                 )
             })}
 
-            <FilterRow 
+            {/* <FilterRow 
                 onCheckboxChange={onCheckboxChange}
                 category={{
                     id: 0,
@@ -52,7 +59,7 @@ const AllBrandsForm: React.FC<AllBrandsFormPropsType> = (props) => {
                     title: 'ATM'
                 }}
                 isActive={true}
-            />
+            /> */}
         </>
     )
 }

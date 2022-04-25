@@ -27,7 +27,17 @@ export type TestMapPagePropsType = MapPropsType & MapDispatchPropsType & OwnTest
 let mapStateToProps = (state: AppStateType) => {
     return {
         routes: state.mapReducer.routes,
-        markers: state.brendObjectReducer.brendObjectList
+        markers: state.brendObjectReducer.brendObjectList,
+        // markers: 
+        // state.categoryReducer.categoryFilter.length !== 0 ?
+        //         state.brendObjectReducer.brendObjectList.filter( item => {
+        //             return state.categoryReducer.categoryFilter.includes(item.brandInfo.category.id)
+        //         })
+        //     :
+        //         state.brendObjectReducer.brendObjectList
+        // ,
+
+        categoryFilter: state.categoryReducer.categoryFilter
     }
 }
 

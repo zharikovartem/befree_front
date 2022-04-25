@@ -20,12 +20,6 @@ const MapMenuDrower: React.FC<MapMenuDrowerPropsType> = (props) => {
         props.getDawerVisible(false)
     }
 
-    const setCenter = (coordinates: CoordinatesType) => {
-        
-    }
-
-    // console.log('MapMenuDrower', visible);
-
     return (
         <Drawer
             // title="Basic Drawer"

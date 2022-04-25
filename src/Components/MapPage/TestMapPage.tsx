@@ -11,7 +11,7 @@ const TestMapPage: React.FC<TestMapPagePropsType> = (props) => {
     const [routes, setRoutes] = useState<any>()
     const [isDrawerVisible, setIsDrawerVisible] = useState<false | string>(false)
 
-    const [needToCloseAll, setNeedToCloseAll] = useState<boolean>(false)
+    const [markers, setMarkers] = useState<any[]>(props.markers)
 
     useEffect(() => {
         getLocation()
@@ -20,6 +20,27 @@ const TestMapPage: React.FC<TestMapPagePropsType> = (props) => {
     useEffect(() => {
         console.log('console.log(params);', props)
     }, [props]);
+
+    // useEffect(() => {
+    //     let newMarkers: any[] = props.markers.filter( (item) => {
+    //         console.log(item)
+    //         const id = item.brandInfo.category.id
+    //         console.log(id)
+    //         console.log('props.categoryFilter', props.categoryFilter)
+    //         if (props.categoryFilter.length === 0) {
+    //             return item
+    //         }
+    //         console.log('props.categoryFilter.includes(id)', props.categoryFilter.includes(id))
+    //         if (props.categoryFilter.includes(id)) {
+    //             return item
+    //         }
+    //     })
+
+    //     console.log('newMarkers', newMarkers)
+
+    //     setMarkers(newMarkers)
+
+    // }, [props.categoryFilter, props.markers]);
 
     const getLocation = () => {
         if (!navigator.geolocation) { } else {
@@ -93,7 +114,10 @@ const TestMapPage: React.FC<TestMapPagePropsType> = (props) => {
                     }}
                     // calculateRoute={props.calculateRoute}
                     getBrendObjectsByBounds={props.getBrendObjectsByBounds}
+
                     markersBrand={props.markers}
+                    // markersBrand={markers}
+
                     getRoutes={getRoutes}
                     isDrawerVisible={isDrawerVisible}
                     getDawerVisible={getDawerVisible}
@@ -103,6 +127,7 @@ const TestMapPage: React.FC<TestMapPagePropsType> = (props) => {
                     clearDirections={clearDirections}
 
                     newCenter={()=>alert('newCenter')}
+                    categoryFilter={props.categoryFilter}
                 />
                 </div>
             </div>
