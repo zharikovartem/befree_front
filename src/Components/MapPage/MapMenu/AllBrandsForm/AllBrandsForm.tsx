@@ -6,10 +6,15 @@ import { categoryTpe } from '../../../../Redux/categoryReducer';
 
 const AllBrandsForm: React.FC<AllBrandsFormPropsType> = (props) => {
 
-    const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>(props.categoryFilter)
+    const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>(props.categoryesList && props.categoryesList.length !== 0 ?
+            props.categoryesList.map( (cat) => cat.id)
+        :
+            []
+        )
 
     useEffect(() => {
         props.changeCategoryFilter(selectedCategoryIds)
+        props.onReload()
     }, [selectedCategoryIds]);
 
     console.log('AllBrandsForm', props);

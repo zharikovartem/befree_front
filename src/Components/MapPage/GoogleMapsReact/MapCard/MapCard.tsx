@@ -117,7 +117,7 @@ const MapCard: React.FC<MapCardPropsType> = (props) => {
 
             {props.markerData.brandInfo.link && props.markerData.brandInfo.link !== '#' &&
                 <DataRow
-                    data={<a href={props.markerData.brandInfo.link}>props.markerData.brandInfo.link</a>}
+                    data={<a target='_blank' href={props.markerData.brandInfo.link}>{props.markerData.brandInfo.link}</a>}
                     icon={<GlobalOutlined />}
                 />
             }

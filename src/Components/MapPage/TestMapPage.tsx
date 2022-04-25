@@ -84,13 +84,14 @@ const TestMapPage: React.FC<TestMapPagePropsType> = (props) => {
                     loadingElement={<div style={{ height: `100%` }} />}
                     containerElement={<div style={{ height: `93vh` }} />}
                     mapElement={<div style={{ height: `100%`, width: `100%`, position: `inherit` }} />}
-                    pathCoordinates={routes}
-                    // myCoords={myCoords}
+                    ////////////////////////////////////////////////////
+                    pathCoordinates={routes} // Маршруты
+                    // myCoords={myCoords} // Мои координвты для маркеры
                     myCoords={{
                         lat: 40.7222034,
                         lng: -74.0475331
                     }}
-                    calculateRoute={props.calculateRoute}
+                    // calculateRoute={props.calculateRoute}
                     getBrendObjectsByBounds={props.getBrendObjectsByBounds}
                     markersBrand={props.markers}
                     getRoutes={getRoutes}
@@ -100,6 +101,8 @@ const TestMapPage: React.FC<TestMapPagePropsType> = (props) => {
                     addError={props.addError}
                     // needToCloseAll={needToCloseAll}
                     clearDirections={clearDirections}
+
+                    newCenter={()=>alert('newCenter')}
                 />
                 </div>
             </div>

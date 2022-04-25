@@ -10,7 +10,7 @@ type MapDispatchPropsType = {
 }
 
 type OwnAllBrandsFormPropsType = {
-    
+    onReload: () => void
 }
 
 export type AllBrandsFormPropsType = MapPropsType & MapDispatchPropsType & OwnAllBrandsFormPropsType

@@ -94,10 +94,21 @@ const MapPage: React.FC<MapPagePropsType> = (props) => {
                         style={{ position: 'absolute' }}
                     >
                         {draverIndex?.split('2-')[1] && 
-                            <BrandsCategoryForm />
+                            <BrandsCategoryForm 
+                                setCenter={()=>{}}
+                                onClose={()=>{}}
+                                setRoute={()=>{}}
+                                myCoords={{
+                                    lat: 0,
+                                    lng: 0
+                                }}
+                                getRoutes={()=>{}}
+                            />
                         }
                         {draverIndex === '1' &&
-                            <AllBrandsForm />
+                            <AllBrandsForm 
+                                onReload={()=>{}}
+                            />
                         }
                     </Drawer>
 

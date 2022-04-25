@@ -15,6 +15,7 @@ import MapMenuDrower from "./MapMenuDrower/MapMenuDrower";
 import { IMapProps, IMarkerProps } from "google-maps-react";
 import { url } from "../../../Api/API";
 import MapCard from "./MapCard/MapCard";
+import { CoordinatesType } from "../../../Redux/mapReducer";
 
 /*global google*/
 
@@ -23,7 +24,7 @@ const MapWithADirectionsRenderer = compose(
     withGoogleMap,
     lifecycle({
         componentDidMount() {
-            // console.log('!!!componentDidMount', this.state)
+            console.log('!!!componentDidMount', this.state)
             // @ts-ignore
             !this.state.bounds && this.props.getBrendObjectsByBounds({
                 // @ts-ignore
@@ -77,6 +78,29 @@ const MapWithADirectionsRenderer = compose(
                     }, 100);
 
                 },
+
+                onCenterChanged: (coordinates: CoordinatesType) => {
+                    console.log('onCenterChanged', this.props);
+
+                    // @ts-ignore
+                    !this.state.bounds && this.props.getBrendObjectsByBounds({
+                        // @ts-ignore
+                        lngMin: parseFloat(coordinates.lng) - 0.04,
+                        // @ts-ignore
+                        lngMax: parseFloat(coordinates.lng) + 0.04,
+                        // @ts-ignore
+                        latMin: parseFloat(coordinates.lat) - 0.04,
+                        // @ts-ignore
+                        latMax: parseFloat(coordinates.lat) + 0.04
+                    })
+
+                },
+
+                onSetNewRuots: (coordinates: CoordinatesType) => {
+                    console.log('onSetNewRuots', coordinates)
+                    console.log('onSetNewRuots props', this.props)
+                },
+
                 // @ts-ignore
                 onSearchBoxMounted: ref => {
                     // @ts-ignore
@@ -129,7 +153,7 @@ const MapWithADirectionsRenderer = compose(
             console.log('!!!', this.props.pathCoordinates)
             // @ts-ignore
             console.log('!!!', !this.state.tryRoute)
-            
+
             // @ts-ignore
             if (this.props.pathCoordinates && !this.state.tryRoute) {
                 console.log('componentDidUpdate', this.props);
@@ -139,7 +163,7 @@ const MapWithADirectionsRenderer = compose(
                     directions: this.props.pathCoordinates,
                     // needToCloseAll: false
                 });
-            } 
+            }
 
             // @ts-ignore
             if (this.props.pathCoordinates === undefined && this.state.tryRoute) {
@@ -182,12 +206,6 @@ const MapWithADirectionsRenderer = compose(
         }
     }, [props.directions]);
 
-    // console.log('??? props', { ...props })
-
-    // useEffect(() => {
-    //     openNotification()
-    // }, []);
-
     useEffect(() => {
         console.log('useEffect', props.markersBrand)
         waitForShowing && setShowingInfoWindow(true)
@@ -204,16 +222,10 @@ const MapWithADirectionsRenderer = compose(
     }
 
     console.log('!!!requests', requests)
-    // setShowingInfoWindow(false)
-
-
-    // const map2 = useGoogleMap()
 
     const clickOmMe = () => {
         alert('You\'re here')
     }
-
-
 
     const onMarkerClick = (id: number) => {
         console.log('onMarkerClick')
@@ -280,10 +292,10 @@ const MapWithADirectionsRenderer = compose(
     }
 
     const onNotificationClick = () => {
-        console.log('onNotificationClick directions', {...directions})
+        console.log('onNotificationClick directions', { ...directions })
         console.log('onNotificationClick props', props)
 
-        let directionsCopy = {...directions}
+        let directionsCopy = { ...directions }
         directionsCopy.routes = []
         console.log(directionsCopy)
         // props.clearDirections()
@@ -295,14 +307,14 @@ const MapWithADirectionsRenderer = compose(
     }
 
     const openNotification = () => {
-        notification.open({
-            top: undefined,
-            message: 'Notification Title',
-            description:
-                'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
-            onClick: onNotificationClick,
-            duration: 0,
-        });
+        // notification.open({
+        //     top: undefined,
+        //     message: 'Notification Title',
+        //     description:
+        //         'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+        //     onClick: onNotificationClick,
+        //     duration: 0,
+        // });
     }
 
     if (props.directions) {
@@ -314,6 +326,16 @@ const MapWithADirectionsRenderer = compose(
 
     const onDirectionsChanged = () => {
         console.log('onDirectionsChanged')
+    }
+
+    // const setCenter = (coordinates: CoordinatesType) => {
+
+    // }
+
+    const onReload = () => {
+        console.log('onReload')
+        // alert('onReload')
+        onBoundsChanged('onReload')
     }
 
     return <>
@@ -334,6 +356,15 @@ const MapWithADirectionsRenderer = compose(
             <MapMenuDrower
                 isDrawerVisible={props.isDrawerVisible}
                 getDawerVisible={props.getDawerVisible}
+                setCenter={(data) => {
+                    setCenter(data)
+                    // onBoundsChanged('123456789')
+                    props.onCenterChanged(data)
+                }}
+                setRoute={(data)=>{props.onSetNewRuots(data)}}
+                myCoords={props.myCoords}
+                getRoutes={getRoutes}
+                onReload={onReload}
             />
 
             <>
@@ -367,7 +398,7 @@ const MapWithADirectionsRenderer = compose(
                         directions={directions}
                         // onDirectionsChanged={onDirectionsChanged}
                         options={{
-                            draggable: true, 
+                            draggable: true,
                             // @ts-ignore
                             // panel: <div>panel</div>
                             suppressInfoWindows: true
