@@ -121,8 +121,8 @@ const BrandsCategoryForm: React.FC<BrandsCategoryFormPropsType> = (props) => {
                             <Button 
                                 onClick={()=>{onNavi(brendObject)}}
                                 className='mx-2' type="ghost" shape="circle" icon={<img src={url+"ico_navi/123/to_map.svg"} alt="" />} size="large" />
-                            <Button className='mx-2' type="primary" shape="circle" icon={<img src={url+"ico_navi/123/to_map.svg"} alt="" />} size="large" />
-                            <Button className='mx-2' type="default" shape="circle" icon={<img src={url+"ico_navi/svg/navi.svg"} alt="" />} size="large" />
+                            {/* <Button className='mx-2' type="primary" shape="circle" icon={<img src={url+"ico_navi/123/to_map.svg"} alt="" />} size="large" /> */}
+                            {/* <Button className='mx-2' type="default" shape="circle" icon={<img src={url+"ico_navi/svg/navi.svg"} alt="" />} size="large" /> */}
                         </СardButtonsBlock>
                     </div>
                 )
