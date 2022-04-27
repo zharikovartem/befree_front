@@ -16,6 +16,8 @@ import { IMapProps, IMarkerProps } from "google-maps-react";
 import { url } from "../../../Api/API";
 import MapCard from "./MapCard/MapCard";
 import { CoordinatesType } from "../../../Redux/mapReducer";
+import AtmCard from "./AtmCard/AtmCard";
+import { AtmType } from "../../../Redux/brendObjectReducer";
 
 /*global google*/
 
@@ -189,6 +191,7 @@ const MapWithADirectionsRenderer = compose(
 
     const [showingInfoWindow, setShowingInfoWindow] = useState<boolean>(false)
     const [activeBrendObject, setActiveBrendObject] = useState<any>()
+    const [activeAtm, setActiveAtm] = useState<AtmType | null>(null)
     const [center, setCenter] = useState<any>(props.myCoords)
     const [requests, setRequests] = useState<number>(0)
     const [waitForShowing, setWaitForShowing] = useState<boolean>(false)
@@ -239,11 +242,29 @@ const MapWithADirectionsRenderer = compose(
             console.log('newCenter', newCenter)
 
             setCenter(newCenter)
-
+            setActiveAtm(null)
             setActiveBrendObject(targetBrendObject)
             setWaitForShowing(true)
             // props.onBoundsChanged()
             onBoundsChanged('onMarkerClick')
+        }
+    }
+
+    const onAtmClick = (id: number) => {
+        console.log(id)
+        const atm = props.markersAtm.filter((atm: any) => atm.id === id)[0]
+        console.log(atm)
+        if (atm) {
+            showingInfoWindow && setShowingInfoWindow(false)
+            const newCenter = {
+                lat: parseFloat(atm.address.latitude),
+                lng: parseFloat(atm.address.longitude),
+            }
+            setCenter(newCenter)
+            setActiveBrendObject(null)
+            setActiveAtm(atm)
+            setWaitForShowing(true)
+            onBoundsChanged('onAtmClick')
         }
     }
 
@@ -391,6 +412,23 @@ const MapWithADirectionsRenderer = compose(
                     )
                 })}
 
+                {props.markersAtm.map((atm: any) => {
+                    console.log('???atm', atm.id, atm)
+                    return (
+                        <Marker
+                            onClick={() => { onAtmClick(atm.id) }}
+                            icon={{
+                                url: 'https://befree.com/marker_ATM.png',
+                                scaledSize: new google.maps.Size(45, 50),
+                            }}
+                            position={{
+                                lat: parseFloat(atm.address.latitude),
+                                lng: parseFloat(atm.address.longitude)
+                            }}
+                        />
+                    )
+                })}
+
                 {
                     props.directions && // console.log('!!!!!!!!', isDirections) &&
                     // isDirections &&
@@ -414,21 +452,25 @@ const MapWithADirectionsRenderer = compose(
                     showingInfoWindow &&
                     <InfoWindow
                         position={{
-                            lat: parseFloat(activeBrendObject.address.latitude),
-                            lng: parseFloat(activeBrendObject.address.longitude)
+                            lat: parseFloat(activeBrendObject ? activeBrendObject.address.latitude : activeAtm?.address.latitude),
+                            lng: parseFloat(activeBrendObject ? activeBrendObject.address.longitude : activeAtm?.address.longitude)
                         }}
                         onPositionChanged={onInfoWindowPositionChanged}
                         onCloseClick={onInfoWindowClose}
                         onDomReady={onDomReady}
                     >
-                        <MapCard
-                            markerData={activeBrendObject}
-                            directionsService={props.directionsService}
-                            getRoutes={getRoutes}
-                            myCoords={props.myCoords}
-                            addSuccess={props.addSuccess}
-                            addError={props.addError}
-                        />
+                        {/* {activeBrendObject && */}
+                            <MapCard
+                                markerData={activeBrendObject}
+                                atmData={activeAtm}
+                                directionsService={props.directionsService}
+                                getRoutes={getRoutes}
+                                myCoords={props.myCoords}
+                                addSuccess={props.addSuccess}
+                                addError={props.addError}
+                            />
+                        {/* }
+                        {activeAtm && <AtmCard />} */}
 
                     </InfoWindow>
                 }

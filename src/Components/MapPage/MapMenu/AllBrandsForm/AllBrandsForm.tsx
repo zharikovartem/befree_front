@@ -51,7 +51,7 @@ const AllBrandsForm: React.FC<AllBrandsFormPropsType> = (props) => {
                 )
             })}
 
-            {/* <FilterRow 
+            <FilterRow 
                 onCheckboxChange={onCheckboxChange}
                 category={{
                     id: 0,
@@ -59,7 +59,7 @@ const AllBrandsForm: React.FC<AllBrandsFormPropsType> = (props) => {
                     title: 'ATM'
                 }}
                 isActive={true}
-            /> */}
+            />
         </>
     )
 }

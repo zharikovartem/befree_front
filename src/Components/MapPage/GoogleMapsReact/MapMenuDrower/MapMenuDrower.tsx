@@ -3,6 +3,7 @@ import { Drawer } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { CoordinatesType } from '../../../../Redux/mapReducer'
 import AllBrandsForm from '../../MapMenu/AllBrandsForm/AllBrandsFormContainer'
+import AtmForm from '../../MapMenu/AtmForm/AtmFormContainer'
 import BrandsCategoryForm from '../../MapMenu/BrandsCategoryForm/BrandsCategoryFormContainer'
 
 const MapMenuDrower: React.FC<MapMenuDrowerPropsType> = (props) => {
@@ -31,6 +32,7 @@ const MapMenuDrower: React.FC<MapMenuDrowerPropsType> = (props) => {
             getContainer={false}
             style={{ position: 'absolute' }}
         >
+            {console.log('visible key', visible)}
             {visible && visible?.split('2-')[1] && // console.log('render BrandsCategoryForm') &&
                 <BrandsCategoryForm 
                     setCenter={props.setCenter}
@@ -45,6 +47,16 @@ const MapMenuDrower: React.FC<MapMenuDrowerPropsType> = (props) => {
                     onReload = {props.onReload}
                 />
                 // <>12456</>
+            }
+
+            {visible === '3' && 
+                <AtmForm 
+                    setCenter={props.setCenter}
+                    onClose={onClose}
+                    setRoute={props.setRoute}
+                    myCoords={props.myCoords}
+                    getRoutes={props.getRoutes}
+                />
             }
         </Drawer>
     )

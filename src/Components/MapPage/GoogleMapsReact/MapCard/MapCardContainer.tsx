@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { AtmType } from '../../../../Redux/brendObjectReducer'
 import { GeoDataType, calculateRoute } from '../../../../Redux/mapReducer'
 import { addSuccess } from '../../../../Redux/messageReducer'
 import { AppStateType } from '../../../../Redux/store'
@@ -13,6 +14,7 @@ type MapDispatchPropsType = {
 
 type OwnMapCardPropsType = {
     markerData: any
+    atmData: AtmType | null
 }
 
 export type MapCardPropsType = MapPropsType & MapDispatchPropsType & OwnMapCardPropsType

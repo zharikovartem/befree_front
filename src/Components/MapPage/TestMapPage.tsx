@@ -116,6 +116,7 @@ const TestMapPage: React.FC<TestMapPagePropsType> = (props) => {
                     getBrendObjectsByBounds={props.getBrendObjectsByBounds}
 
                     markersBrand={props.markers}
+                    markersAtm={props.atmList}
                     // markersBrand={markers}
 
                     getRoutes={getRoutes}

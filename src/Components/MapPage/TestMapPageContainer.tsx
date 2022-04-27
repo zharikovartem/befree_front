@@ -28,6 +28,7 @@ let mapStateToProps = (state: AppStateType) => {
     return {
         routes: state.mapReducer.routes,
         markers: state.brendObjectReducer.brendObjectList,
+        atmList: state.brendObjectReducer.atmList,
         // markers: 
         // state.categoryReducer.categoryFilter.length !== 0 ?
         //         state.brendObjectReducer.brendObjectList.filter( item => {

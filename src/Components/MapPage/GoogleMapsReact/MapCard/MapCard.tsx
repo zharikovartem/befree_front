@@ -7,7 +7,8 @@ import { Link } from 'react-router-dom'
 import { calculateRoute } from '../../../../Redux/mapReducer'
 import { useDispatch } from 'react-redux'
 import { addSuccess } from '../../../../Redux/messageReducer'
-// import { MapCardPropsType } from './MapCardContainer'
+import AtmCard from '../AtmCard/AtmCard'
+import { AtmType } from '../../../../Redux/brendObjectReducer'
 
 export const СardButtonsBlock = styled.div`
     background-color: #ecebeb;
@@ -24,8 +25,10 @@ const MapCard: React.FC<MapCardPropsType> = (props) => {
     const onNavi = () => {
         console.log('onNavi', props.directionsService);
 
+        const data = props.markerData ? props.markerData : props.atmData
+
         const start = new google.maps.LatLng(props.myCoords.lat, props.myCoords.lng)
-        const stop = new google.maps.LatLng(props.markerData.address.latitude, props.markerData.address.longitude)
+        const stop = new google.maps.LatLng(data.address.latitude, data.address.longitude)
 
         // props.calculateRoute(start, stop, props.directionsService)
         // const func = calculateRoute(start, stop, props.directionsService)
@@ -48,9 +51,14 @@ const MapCard: React.FC<MapCardPropsType> = (props) => {
     }
 
     const onGetGoogleLink = () => {
+        const data = props.markerData ? props.markerData : props.atmData
         console.log('onGetGoogleLink')
-        navigator.clipboard.writeText('http://maps.google.com/?ie=UTF8&hq=&ll='+props.markerData.address.latitude+','+props.markerData.address.longitude+'&z=17')
+        navigator.clipboard.writeText('http://maps.google.com/?ie=UTF8&hq=&ll='+data.address.latitude+','+data.address.longitude+'&z=17')
         props.addSuccess('Data successfully copied to clipboard')
+    }
+
+    if (!props.markerData) {
+        return <AtmCard {...props} onGetGoogleLink={onGetGoogleLink} onNavi={onNavi} />
     }
 
     return (
@@ -183,8 +191,9 @@ const MapCard: React.FC<MapCardPropsType> = (props) => {
 
 export default MapCard
 
-type MapCardPropsType = {
+export type MapCardPropsType = {
     markerData: any
+    atmData: AtmType | null
     directionsService: any
     getRoutes: (routesResp: any) => void
     myCoords: any
