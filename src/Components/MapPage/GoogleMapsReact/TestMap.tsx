@@ -396,7 +396,7 @@ const MapWithADirectionsRenderer = compose(
                 />
 
                 {props.markersBrand.map((brandObject: any) => {
-                    console.log('???', brandObject.id, brandObject)
+                    // console.log('???', brandObject.id, brandObject)
                     return (
                         <Marker
                             onClick={() => { onMarkerClick(brandObject.id) }}
