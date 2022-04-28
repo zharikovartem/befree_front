@@ -150,12 +150,25 @@ const MapWithADirectionsRenderer = compose(
         },
 
         componentDidUpdate() {
-            console.log('!!!componentDidUpdate', this.props)
-            console.log('!!!componentDidUpdate', this.state)
+            console.log('!!!componentDidUpdate props', this.props)
+            console.log('!!!componentDidUpdate state', this.state)
             // @ts-ignore
             console.log('!!!', this.props.pathCoordinates)
             // @ts-ignore
             console.log('!!!', !this.state.tryRoute)
+
+            // @ts-ignore
+            if (this.state.directions && this.props.pathCoordinates && this.props.pathCoordinates.routes && this.state.directions.routes 
+                // @ts-ignore
+                && this.state.directions.routes !== this.props.pathCoordinates.routes) 
+            {
+                // alert('NEW')
+                this.setState({
+                    // @ts-ignore
+                    directions: this.props.pathCoordinates,
+                    tryRoute: true,
+                })
+            }
 
             // @ts-ignore
             if (this.props.pathCoordinates && !this.state.tryRoute) {
@@ -166,11 +179,13 @@ const MapWithADirectionsRenderer = compose(
                     directions: this.props.pathCoordinates,
                     // needToCloseAll: false
                 });
+            } else {
+
             }
 
             // @ts-ignore
             if (this.props.pathCoordinates === undefined && this.state.tryRoute) {
-                console.log(this.props)
+                console.log('ОБРЕЗАЕТ ЗДЕСЬ',this.props)
                 this.setState({
                     tryRoute: false,
                     // @ts-ignore
@@ -178,12 +193,21 @@ const MapWithADirectionsRenderer = compose(
                     // needToCloseAll: false
                 });
             }
-            // else {
+            
+            // // @ts-ignore
+            // if (this.props.pathCoordinates !== undefined 
             //     // @ts-ignore
-            //     if(!this.state.tryRoute) this.setState({
+            //     && this.props.pathCoordinates.routes 
+            //     // @ts-ignore
+            //     && this.props.pathCoordinates.routes.length > 0
+            //     // @ts-ignore
+            //     && this.state.tryRoute) 
+            // {
+            //     this.setState({
             //         // @ts-ignore
-            //         directions: false,
-            //     });
+            //         directions: this.props.pathCoordinates,
+            //         tryRoute: false,
+            //     })
             // }
         }
     })
@@ -208,7 +232,7 @@ const MapWithADirectionsRenderer = compose(
             console.log('+++')
             setDirections(props.directions)
         }
-    }, [props.directions]);
+    }, [props.directions, props.directions?.routes]);
 
     useEffect(() => {
         console.log('useEffect', props.markersBrand)
@@ -287,7 +311,9 @@ const MapWithADirectionsRenderer = compose(
 
     const getRoutes = (routesResp: any) => {
         setShowingInfoWindow(false)
+        console.log('getRoutes calculateRoute result', routesResp)
         props.getRoutes(routesResp)
+        // props.getRoutes(routesResp)
     }
 
     const onDragStart = () => {

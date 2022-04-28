@@ -1,4 +1,4 @@
-import { Button, Col, Row } from 'antd'
+import { Button, Col, Row, Spin } from 'antd'
 import React, { useEffect, useState } from 'react'
 
 const NavigatePanel:React.FC<NavigatePanelPropsType> = (props) => {
@@ -6,7 +6,7 @@ const NavigatePanel:React.FC<NavigatePanelPropsType> = (props) => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
 
     useEffect(() => {
-        props.directions && props.directions.routes.length > 0 && setIsOpen(!!props.directions.routes[0])
+        props.directions && props.directions.routes && props.directions.routes.length > 0 && setIsOpen(!!props.directions.routes[0])
         console.log('NavigatePanel directions1', props.directions)
         // console.log('NavigatePanel directions2', props.directions.routes.length > 0)
     }, [props.directions, props.directions?.routes]);
@@ -24,6 +24,10 @@ const NavigatePanel:React.FC<NavigatePanelPropsType> = (props) => {
         console.log('newDirections', {...newDirections})
         props.setDirections(newDirections)
         setIsOpen(false)
+    }
+
+    if (!props.directions || !props.directions.routes || props.directions.routes.length === 0) {
+        return <Spin />
     }
 
     return (
@@ -46,10 +50,10 @@ const NavigatePanel:React.FC<NavigatePanelPropsType> = (props) => {
             >
                 <Row className='m-2'>
                     <Col span={6} className='border'>
-                        {props.directions && props.directions.routes[0] && props.directions.routes[0].legs[0].duration.text}
+                        {props.directions && props.directions?.routes[0] && props.directions.routes[0].legs[0].duration.text}
                     </Col>
                     <Col span={6} className='border'>
-                        {props.directions && props.directions.routes[0] && props.directions.routes[0].legs[0].distance.text}
+                        {props.directions && props.directions?.routes[0] && props.directions.routes[0].legs[0].distance.text}
                     </Col>
                     <Col span={12} className='border'>
                         <Button onClick={onGo} className='m-2' size='small' type='primary' shape='round'>Driving</Button>

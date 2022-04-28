@@ -14,6 +14,10 @@ const TestMapPage: React.FC<TestMapPagePropsType> = (props) => {
     const [markers, setMarkers] = useState<any[]>(props.markers)
 
     useEffect(() => {
+        console.log('routes is changed', routes)
+    }, [routes]);
+
+    useEffect(() => {
         getLocation()
     }, []);
 
@@ -55,7 +59,19 @@ const TestMapPage: React.FC<TestMapPagePropsType> = (props) => {
 
     const getRoutes = (routesResp: any) => {
         console.log('getRoutes', routesResp)
-        setRoutes(routesResp)
+        // setRoutes(routesResp)
+        if (routes) {
+            const newRounes = {
+                ...routes,
+                routes: routesResp.routes
+            }
+            console.log('newRounes', newRounes)
+            console.log('newRounes', newRounes)
+            setRoutes(newRounes)
+        } else {
+            console.log('init newRounes', routesResp)
+            setRoutes(routesResp)
+        }
     }
 
     const showDrawer = (ev: any) => {
