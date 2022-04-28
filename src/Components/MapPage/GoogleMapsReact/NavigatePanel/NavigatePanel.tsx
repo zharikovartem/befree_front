@@ -12,7 +12,7 @@ const NavigatePanel:React.FC<NavigatePanelPropsType> = (props) => {
     }, [props.directions, props.directions?.routes]);
 
     const onGo = () => {
-        console.log('onGo')
+        alert('onGo')
     }
 
     const onCancel = () => {
@@ -37,10 +37,11 @@ const NavigatePanel:React.FC<NavigatePanelPropsType> = (props) => {
                     top: '0%',
                     left: '50%',
                     margin: 'auto',
-                    width : 400,
+                    width : 370,
+                    // maxWidth: '100%',
                     // height: 75,
                     marginTop: 130,
-                    marginLeft: -200,
+                    marginLeft: -185,
                     zIndex: 200,
                     backgroundColor: 'white',
                     borderRadius: 10

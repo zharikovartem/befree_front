@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { BrandsCategoryFormPropsType } from './BrandsCategoryFormContainer'
 import './BrandsCategoryForm.css'
-import { Button, Col, Row } from 'antd'
+import { Button, Col, Rate, Row } from 'antd'
 import { url } from '../../../../Api/API'
 import { DataRow, СardButtonsBlock } from './../../GoogleMapsReact/MapCard/MapCard'
-import { HomeFilled } from '@ant-design/icons'
+import { HomeFilled, StarFilled } from '@ant-design/icons'
 
 
 const BrandsCategoryForm: React.FC<BrandsCategoryFormPropsType> = (props) => {
@@ -105,8 +105,24 @@ const BrandsCategoryForm: React.FC<BrandsCategoryFormPropsType> = (props) => {
                             </Col>
                         </Row>
                         <Row className='m-2'>
-                            <Col span={12}>Currencies</Col>
-                            <Col span={12}>Stars</Col>
+                            <Col span={12}>
+                                <img className='mx-1 mb-2' style={{height: 14, minHeight: '2.5vmin', maxHeight: 48}} src="https://befree.com/media/cache/currency/upload/image/currency/crypto/logo/61/d2/5c/2b/64/61d25c2b64a783.73848118.png" />
+                                <img className='mx-1 mb-2' style={{height: 14, minHeight: '2.5vmin', maxHeight: 48}} src="https://befree.com/media/cache/currency/upload/image/currency/crypto/logo/61/d2/5c/2b/67/61d25c2b671ef6.37235746.png" />
+                                <img className='mx-1 mb-2' style={{height: 14, minHeight: '2.5vmin', maxHeight: 48}} src="https://befree.com/media/cache/currency/upload/image/currency/crypto/logo/61/d2/5c/2b/84/61d25c2b848ac1.52126732.png" />
+                                <img className='mx-1 mb-2' style={{height: 14, minHeight: '2.5vmin', maxHeight: 48}} src="https://befree.com/media/cache/currency/upload/image/currency/crypto/logo/61/d2/5c/2b/8d/61d25c2b8d4b29.51729145.png" />
+                                <img className='mx-1 mb-2' style={{height: 14, minHeight: '2.5vmin', maxHeight: 48}} src="https://befree.com/media/cache/currency/upload/image/currency/crypto/logo/61/d2/5c/2b/69/61d25c2b6907b3.85874982.png" />
+                            </Col>
+                            <Col span={12}>
+                                {console.log('###', window.innerWidth)}
+                                <Rate 
+                                    character={<StarFilled className='mb-2' style={{height: 24, minHeight: '2vw'}} />}
+                                    style={{
+                                        fontSize: window.innerWidth < 500 ? 14 : window.innerWidth < 900 ? 20 : 24, 
+                                    }}  
+                                    defaultValue={5} 
+                                    disabled
+                                />
+                            </Col>
                         </Row>
 
                         <DataRow 

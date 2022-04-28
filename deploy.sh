@@ -3,6 +3,8 @@
 # git config user.name "ArtemZharikov"
 # git config user.email "a.zharikov@smartdesign.by"
 
+git pull
+
 read -p "Нужен ли git push? y/n:   > " isGitPush
 if [[ ${isGitPush} == "y" ]]
 then
