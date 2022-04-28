@@ -18,6 +18,7 @@ import MapCard from "./MapCard/MapCard";
 import { CoordinatesType } from "../../../Redux/mapReducer";
 import AtmCard from "./AtmCard/AtmCard";
 import { AtmType } from "../../../Redux/brendObjectReducer";
+import NavigatePanel from "./NavigatePanel/NavigatePanel";
 
 /*global google*/
 
@@ -388,6 +389,11 @@ const MapWithADirectionsRenderer = compose(
                 onReload={onReload}
             />
 
+            <NavigatePanel 
+                directions={directions}
+                setDirections={setDirections}
+            />
+
             <>
                 <Marker
                     onClick={clickOmMe}
@@ -436,10 +442,10 @@ const MapWithADirectionsRenderer = compose(
                         directions={directions}
                         // onDirectionsChanged={onDirectionsChanged}
                         options={{
-                            draggable: true,
+                            // draggable: true,
                             // @ts-ignore
                             // panel: <div>panel</div>
-                            suppressInfoWindows: true
+                            // suppressInfoWindows: true
                         }}
                     />
                 }

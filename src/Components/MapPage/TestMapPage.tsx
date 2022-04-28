@@ -71,6 +71,7 @@ const TestMapPage: React.FC<TestMapPagePropsType> = (props) => {
             categoryId && category.push(parseInt(categoryId))
     
             // alert(ev.key)
+            console.log('myCoords !!!', myCoords)
     
             myCoords && props.getNearestBrendObjects({
                 lat: myCoords.lat,

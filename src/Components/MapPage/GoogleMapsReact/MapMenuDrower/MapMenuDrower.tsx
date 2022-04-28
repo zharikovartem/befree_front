@@ -30,9 +30,11 @@ const MapMenuDrower: React.FC<MapMenuDrowerPropsType> = (props) => {
             onClose={onClose}
             visible={!!visible}
             getContainer={false}
-            style={{ position: 'absolute' }}
+            style={{ position: 'absolute', maxWidth: '400px'}}
+            width={'100%'}
+            bodyStyle={{padding: 12}}
         >
-            {console.log('visible key', visible)}
+            {/* {console.log('visible key', visible)} */}
             {visible && visible?.split('2-')[1] && // console.log('render BrandsCategoryForm') &&
                 <BrandsCategoryForm 
                     setCenter={props.setCenter}

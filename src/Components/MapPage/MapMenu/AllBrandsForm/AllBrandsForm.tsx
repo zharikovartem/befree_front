@@ -75,7 +75,7 @@ type FilterRowPropsType = {
 const FilterRow: React.FC<FilterRowPropsType> = (props) => {
     return (
         <Row>
-            <Col span={4}>
+            <Col span={2} className='m-1'>
                 {
                     props.category.title === 'ATM' ? 
                     <img src={props.category.logoFileName} />
@@ -84,11 +84,11 @@ const FilterRow: React.FC<FilterRowPropsType> = (props) => {
                 }
                 
             </Col>
-            <Col className="d-flex flex-wrap align-content-start" span={16}>
-                <h5>{props.category.title}</h5>
+            <Col className="d-flex flex-wrap align-content-start" span={18} offset={1}>
+                <p className='mt-2 mb-1'><b>{props.category.title}</b></p>
             </Col>
-            <Col className="d-flex flex-wrap align-content-start" span={4}>
-                <Checkbox value={props.category.id} onChange={props.onCheckboxChange} checked={props.isActive}></Checkbox>
+            <Col className="d-flex flex-wrap align-content-start" span={2}>
+                <Checkbox className='mt-2 mb-1' value={props.category.id} onChange={props.onCheckboxChange} checked={props.isActive}></Checkbox>
             </Col>
         </Row>
     )
