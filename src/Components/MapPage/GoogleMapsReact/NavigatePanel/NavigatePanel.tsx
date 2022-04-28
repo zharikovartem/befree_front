@@ -1,9 +1,12 @@
 import { Button, Col, Row, Spin } from 'antd'
 import React, { useEffect, useState } from 'react'
+import { CoordinatesType } from '../../../../Redux/mapReducer';
+import { speak, speakByLangs } from '../../../../Utils/Voise/Voise';
 
 const NavigatePanel:React.FC<NavigatePanelPropsType> = (props) => {
 
     const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [isGo, setIsGo] = useState<boolean>(false)
 
     useEffect(() => {
         props.directions && props.directions.routes && props.directions.routes.length > 0 && setIsOpen(!!props.directions.routes[0])
@@ -12,7 +15,18 @@ const NavigatePanel:React.FC<NavigatePanelPropsType> = (props) => {
     }, [props.directions, props.directions?.routes]);
 
     const onGo = () => {
-        alert('onGo')
+        // alert('onGo')
+        props.setCenter({
+            lat: props.directions.request.origin.location.lat(),
+            lng: props.directions.request.origin.location.lng()
+        })
+        props.setZoom(19)
+        setIsGo(true)
+
+        props.directions && props.directions?.routes[0] && console.log(props.directions.routes[0].legs[0].steps[0])
+        console.log(props.directions)
+
+        speakByLangs(props.directions && props.directions?.routes[0] && props.directions.routes[0].legs[0].steps[0].instructions)
     }
 
     const onCancel = () => {
@@ -24,6 +38,7 @@ const NavigatePanel:React.FC<NavigatePanelPropsType> = (props) => {
         console.log('newDirections', {...newDirections})
         props.setDirections(newDirections)
         setIsOpen(false)
+        setIsGo(false)
     }
 
     if (!props.directions || !props.directions.routes || props.directions.routes.length === 0) {
@@ -50,17 +65,21 @@ const NavigatePanel:React.FC<NavigatePanelPropsType> = (props) => {
                 hidden={!isOpen}
             >
                 <Row className='m-2'>
-                    <Col span={6} className='border'>
+                    <Col span={6} className='align-self-center'>
                         {props.directions && props.directions?.routes[0] && props.directions.routes[0].legs[0].duration.text}
                     </Col>
-                    <Col span={6} className='border'>
+                    <Col span={6} className=' align-self-center'>
                         {props.directions && props.directions?.routes[0] && props.directions.routes[0].legs[0].distance.text}
                     </Col>
-                    <Col span={12} className='border'>
-                        <Button onClick={onGo} className='m-2' size='small' type='primary' shape='round'>Driving</Button>
-                        <Button onClick={onCancel} className='m-2' size='small' type='primary' danger shape='round'>Cansel</Button>
+                    <Col span={isGo ? 6 : 12} className='align-self-center'>
+                        <Button hidden={isGo} onClick={onGo} className='m-2' size='small' type='primary' shape='round'>Driving</Button>
+                        <Button onClick={onCancel} className='m-2' size='small' type='primary' danger shape='round'>{isGo ? 'Stop':'Сancel'}</Button>
                     </Col>
                 </Row>
+                {/* <p hidden={!isGo}>{props.directions && props.directions?.routes[0] && props.directions.routes[0].legs[0].steps[0].instructions}</p> */}
+                <div hidden={!isGo} className="Container" dangerouslySetInnerHTML={{
+                    __html: props.directions && props.directions?.routes[0] && props.directions.routes[0].legs[0].steps[0].instructions
+                }}></div>
             </div>
     )
 }
@@ -70,4 +89,6 @@ export default  NavigatePanel
 type NavigatePanelPropsType = {
     directions: any
     setDirections: React.Dispatch<any>
+    setCenter: (coordinates: CoordinatesType) => void
+    setZoom: React.Dispatch<React.SetStateAction<number>>
 }

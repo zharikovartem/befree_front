@@ -223,6 +223,7 @@ const MapWithADirectionsRenderer = compose(
     const [isNotificationOpen, setIsNotificationOpen] = useState<boolean>(false)
     // const [isDirections, setIsDirections] = useState<boolean>(!!props.directions)
     const [directions, setDirections] = useState<any>(props.directions)
+    const [zoom, setZoom] = useState<number>(14)
 
     console.log('???!!!: ', props.markersBrand)
 
@@ -398,6 +399,7 @@ const MapWithADirectionsRenderer = compose(
             onDragEnd={onDragEnd}
             onZoomChanged={onZoomChanged}
             // ref={mapRef}
+            zoom={zoom}
 
             ref={props.onMapMounted}
         >
@@ -406,7 +408,6 @@ const MapWithADirectionsRenderer = compose(
                 getDawerVisible={props.getDawerVisible}
                 setCenter={(data) => {
                     setCenter(data)
-                    // onBoundsChanged('123456789')
                     props.onCenterChanged(data)
                 }}
                 setRoute={(data)=>{props.onSetNewRuots(data)}}
@@ -418,6 +419,11 @@ const MapWithADirectionsRenderer = compose(
             <NavigatePanel 
                 directions={directions}
                 setDirections={setDirections}
+                setCenter={(data) => {
+                    setCenter(data)
+                    props.onCenterChanged(data)
+                }}
+                setZoom={setZoom}
             />
 
             <>
