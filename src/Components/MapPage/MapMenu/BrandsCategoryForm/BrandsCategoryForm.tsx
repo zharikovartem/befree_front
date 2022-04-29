@@ -130,6 +130,11 @@ const BrandsCategoryForm: React.FC<BrandsCategoryFormPropsType> = (props) => {
                             icon={<HomeFilled/>}
                         />
 
+                        <DataRow
+                            label='Distance'
+                            data={'12.6 km'}
+                        />
+
                         <СardButtonsBlock className='m-3'>
                             <Button onClick={()=>{
                                 onGetGoogleLink(brendObject)

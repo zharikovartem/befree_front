@@ -32,17 +32,17 @@ const MapCard: React.FC<MapCardPropsType> = (props) => {
 
         // props.calculateRoute(start, stop, props.directionsService)
         // const func = calculateRoute(start, stop, props.directionsService)
-        
+
         // const directionsService = new props.directionsService.maps.DirectionsService()
-        const DirectionsService = new google.maps.DirectionsService();      
+        const DirectionsService = new google.maps.DirectionsService();
         DirectionsService.route({
             origin: start,
             destination: stop,
             travelMode: google.maps.TravelMode.DRIVING,
-        }, (result: google.maps.DirectionsResult, status: google.maps.DirectionsStatus)=>{
+        }, (result: google.maps.DirectionsResult, status: google.maps.DirectionsStatus) => {
             console.log('calculateRoute result', result)
             console.log('calculateRoute status', status)
-            if(status === 'OK') {
+            if (status === 'OK') {
                 props.getRoutes(result)
             } else {
                 props.addError('You can not build this route')
@@ -53,7 +53,7 @@ const MapCard: React.FC<MapCardPropsType> = (props) => {
     const onGetGoogleLink = () => {
         const data = props.markerData ? props.markerData : props.atmData
         console.log('onGetGoogleLink')
-        navigator.clipboard.writeText('http://maps.google.com/?ie=UTF8&hq=&ll='+data.address.latitude+','+data.address.longitude+'&z=17')
+        navigator.clipboard.writeText('http://maps.google.com/?ie=UTF8&hq=&ll=' + data.address.latitude + ',' + data.address.longitude + '&z=17')
         props.addSuccess('Data successfully copied to clipboard')
     }
 
@@ -117,7 +117,7 @@ const MapCard: React.FC<MapCardPropsType> = (props) => {
             {props.markerData.phoneNumbers.length > 0 &&
                 <DataRow label="Phone"
                     // data={props.markerData.phoneNumbers[0].number}
-                    data={<a href={'tel:'+props.markerData.phoneNumbers[0].number}>{props.markerData.phoneNumbers[0].number}</a>}
+                    data={<a href={'tel:' + props.markerData.phoneNumbers[0].number}>{props.markerData.phoneNumbers[0].number}</a>}
                     icon={<PhoneFilled />}
                 // data={'???'}
                 />
@@ -131,19 +131,20 @@ const MapCard: React.FC<MapCardPropsType> = (props) => {
             }
 
             {props.markerData.additionalInformation &&
-            <Divider
-                orientation="left"
-                className='my-1'
-                plain
-            >
-                Additional info
-            </Divider>
-            &&
-            <DataRow
-                // label="WWW"
-                data={props.markerData.additionalInformation}
-                icon={<EditFilled />}
-            />
+                <Divider
+                    orientation="left"
+                    className='my-1'
+                    plain
+                >
+                    Additional info
+                </Divider>
+                &&
+                <DataRow
+                    // label="WWW"
+                    data={props.markerData.additionalInformation}
+                    icon={<EditFilled />}
+                />
+
             }
 
             <СardButtonsBlock>
@@ -215,8 +216,13 @@ export const DataRow: React.FC<DataRowType> = (props) => {
             <Col span={2}>
                 {props.icon && props.icon}
             </Col >
-            <Col span={20}>
-                {props.label && props.label + ': '} {typeof props.data === 'string' ? props.data.replace(/<[^>]+>/g, '') : props.data}
+            <Col 
+                className='mt-1' 
+                span={22}
+            >
+                <span className="" style={{marginRight: 'auto', marginLeft: 0}}>
+                    {props.label && props.label + ': '} {typeof props.data === 'string' ? props.data.replace(/<[^>]+>/g, '') : props.data}
+                </span>
             </Col>
         </Row>
     )

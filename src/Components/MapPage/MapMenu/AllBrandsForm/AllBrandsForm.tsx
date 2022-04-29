@@ -9,7 +9,8 @@ const setSelectedCategoryIdsInit = (categoryesList: any[] | null, categoryFilter
         return categoryFilter
     } else {
         if (categoryesList) {
-            return  categoryesList.length !== 0 ? categoryesList.map( (cat) => cat.id) : []
+            return  categoryesList.length !== 0 ? categoryesList.map( (cat) => cat.id)//.push(1) 
+            : []
         }
         return []
     }
@@ -58,7 +59,8 @@ const AllBrandsForm: React.FC<AllBrandsFormPropsType> = (props) => {
                     logoFileName: url+'/aside-panel-icon-8.svg',
                     title: 'ATM'
                 }}
-                isActive={true}
+                // isActive={true}
+                isActive={selectedCategoryIds.includes(0)}
             />
         </>
     )
