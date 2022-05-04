@@ -11,7 +11,7 @@ import {
 import MapMenu from "../MapMenu/MapMenuContainer";
 import { notification } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
-import MapMenuDrower from "./MapMenuDrower/MapMenuDrower";
+import MapMenuDrower from "../MapMenu/MapMenuDrower/MapMenuDrower";
 import { IMapProps, IMarkerProps } from "google-maps-react";
 import { url } from "../../../Api/API";
 import MapCard from "./MapCard/MapCard";
@@ -21,6 +21,11 @@ import { AtmType } from "../../../Redux/brendObjectReducer";
 import NavigatePanel from "./NavigatePanel/NavigatePanel";
 
 /*global google*/
+
+export type InfoWindowDataType = {
+    type: 'atm' | 'brend'
+    id: number
+}
 
 const MapWithADirectionsRenderer = compose(
     withScriptjs,
@@ -225,6 +230,8 @@ const MapWithADirectionsRenderer = compose(
     const [directions, setDirections] = useState<any>(props.directions)
     const [zoom, setZoom] = useState<number>(14)
 
+    const [isWaitingMarkerData, setIsWaitingMarkerData] = useState<false | InfoWindowDataType>(false) // выставляем тру если нужно дождаться новые маркеры
+
     console.log('???!!!: ', props.markersBrand)
 
     useEffect(() => {
@@ -236,13 +243,43 @@ const MapWithADirectionsRenderer = compose(
     }, [props.directions, props.directions?.routes]);
 
     useEffect(() => {
-        console.log('useEffect', props.markersBrand)
+        console.log('useEffect markersBrand changed', props.markersBrand)
+        console.log('isWaitingMarkerData', isWaitingMarkerData)
         waitForShowing && setShowingInfoWindow(true)
         setWaitForShowing(false)
         if (requests !== 0) {
             setRequests(requests - 1)
         }
+        if (isWaitingMarkerData) {
+            if (isWaitingMarkerData.type === 'brend') {
+                setActiveAtm(null)
+                const targetBrendObject = props.markersBrand.filter((brandObject: any) => brandObject.id === isWaitingMarkerData.id)[0]
+                console.log('targetBrendObject', targetBrendObject)
+                console.log('props.markersBrand', props.markersBrand)
+                targetBrendObject && setActiveBrendObject(targetBrendObject)
+                targetBrendObject && setShowingInfoWindow(true)
+                setIsWaitingMarkerData(false)
+            }
+            
+        }
     }, [props.markersBrand]);
+
+    useEffect(() => {
+        console.log('useEffect markersAtm changed', props.markersAtm)
+        console.log('isWaitingMarkerData', isWaitingMarkerData)
+        if (isWaitingMarkerData) {
+            if (isWaitingMarkerData.type === 'atm') {
+                setActiveBrendObject(null)
+                const targetAtm = props.markersAtm.filter((atm: any) => atm.id === isWaitingMarkerData.id)[0]
+
+                console.log('targetAtm', targetAtm)
+                console.log('props.markersAtm', props.markersAtm)
+                targetAtm && setActiveAtm(targetAtm)
+                targetAtm && setShowingInfoWindow(true)
+                setIsWaitingMarkerData(false)
+            }
+        }
+    }, [props.markersAtm]);
 
     const onBoundsChanged = (from: string) => {
         console.log('!!!requests ++ (' + from + ')')
@@ -377,9 +414,16 @@ const MapWithADirectionsRenderer = compose(
         console.log('onDirectionsChanged')
     }
 
-    // const setCenter = (coordinates: CoordinatesType) => {
+    const onSetCenter = (coordinates: CoordinatesType, isShowInfoWindow?: InfoWindowDataType) => {
+        setCenter(coordinates)
+        props.onCenterChanged(coordinates)
 
-    // }
+        if (isShowInfoWindow) {
+            console.log(isShowInfoWindow)
+            alert('isShowInfoWindow')
+            setIsWaitingMarkerData(isShowInfoWindow)
+        }
+    }
 
     const onReload = () => {
         console.log('onReload')
@@ -406,10 +450,11 @@ const MapWithADirectionsRenderer = compose(
             <MapMenuDrower
                 isDrawerVisible={props.isDrawerVisible}
                 getDawerVisible={props.getDawerVisible}
-                setCenter={(data) => {
-                    setCenter(data)
-                    props.onCenterChanged(data)
-                }}
+                // setCenter={(data) => {
+                //     setCenter(data)
+                //     props.onCenterChanged(data)
+                // }}
+                setCenter={onSetCenter}
                 setRoute={(data)=>{props.onSetNewRuots(data)}}
                 myCoords={props.myCoords}
                 getRoutes={getRoutes}

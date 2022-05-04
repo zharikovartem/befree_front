@@ -2,6 +2,7 @@ import {connect} from 'react-redux'
 import { CoordinatesType } from '../../../../Redux/mapReducer'
 import { addSuccess, addError } from '../../../../Redux/messageReducer'
 import { AppStateType } from '../../../../Redux/store'
+import { InfoWindowDataType } from '../../GoogleMapsReact/TestMap'
 //import { AppStateType } from './../Redux/store'
 import BrandsCategoryForm from './BrandsCategoryForm'
 
@@ -13,7 +14,7 @@ type MapDispatchPropsType = {
 }
 
 type OwnBrandsCategoryFormPropsType = {
-    setCenter: (coordinates: CoordinatesType) => void
+    setCenter: (coordinates: CoordinatesType, data?: InfoWindowDataType) => void
     setRoute: (coordinates: CoordinatesType) => void
     onClose: () => void
     myCoords: CoordinatesType

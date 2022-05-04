@@ -50,6 +50,8 @@ const MapCard: React.FC<MapCardPropsType> = (props) => {
         })
     }
 
+    console.log('MapCard props', props)
+
     const onGetGoogleLink = () => {
         const data = props.markerData ? props.markerData : props.atmData
         console.log('onGetGoogleLink')

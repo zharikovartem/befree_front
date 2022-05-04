@@ -42,10 +42,16 @@ const AtmForm: React.FC<AtmFormPropsType> = (props) => {
     const onImageClick = (atm: any) => {
         console.log(atm.address.latitude)
         console.log(atm.address.longitude)
-        props.setCenter({
-            lat:parseFloat(atm.address.latitude),
-            lng:parseFloat(atm.address.longitude),
-        })
+        props.setCenter(
+            {
+                lat:parseFloat(atm.address.latitude),
+                lng:parseFloat(atm.address.longitude),
+            }, 
+            {
+                type: 'atm',
+                id: atm.id
+            }
+        )
         props.onClose()
     }
 

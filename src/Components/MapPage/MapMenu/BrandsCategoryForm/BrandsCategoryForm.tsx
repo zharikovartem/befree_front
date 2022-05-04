@@ -19,10 +19,16 @@ const BrandsCategoryForm: React.FC<BrandsCategoryFormPropsType> = (props) => {
     const onImageClick = (brendObject: any) => {
         console.log(brendObject.address.latitude)
         console.log(brendObject.address.longitude)
-        props.setCenter({
-            lat:parseFloat(brendObject.address.latitude),
-            lng:parseFloat(brendObject.address.longitude),
-        })
+        props.setCenter(
+            {
+                lat:parseFloat(brendObject.address.latitude),
+                lng:parseFloat(brendObject.address.longitude),
+            }, 
+            {
+                type: 'brend',
+                id: brendObject.id
+            }
+        )
         props.onClose()
     }
 

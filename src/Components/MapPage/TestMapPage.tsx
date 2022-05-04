@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import MapMenu from './MapMenu/MapMenuContainer'
 import TestMap from '../MapPage/GoogleMapsReact/TestMap'
 import { Col, Row } from 'antd'
-import MapMenuDrower from './GoogleMapsReact/MapMenuDrower/MapMenuDrower'
+import MapMenuDrower from './MapMenu/MapMenuDrower/MapMenuDrower'
 import { TestMapPagePropsType } from './TestMapPageContainer'
 
 const TestMapPage: React.FC<TestMapPagePropsType> = (props) => {

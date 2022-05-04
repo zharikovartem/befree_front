@@ -2,9 +2,10 @@ import { CloseOutlined } from '@ant-design/icons'
 import { Drawer } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { CoordinatesType } from '../../../../Redux/mapReducer'
-import AllBrandsForm from '../../MapMenu/AllBrandsForm/AllBrandsFormContainer'
-import AtmForm from '../../MapMenu/AtmForm/AtmFormContainer'
-import BrandsCategoryForm from '../../MapMenu/BrandsCategoryForm/BrandsCategoryFormContainer'
+import { InfoWindowDataType } from '../../GoogleMapsReact/TestMap'
+import AllBrandsForm from '../AllBrandsForm/AllBrandsFormContainer'
+import AtmForm from '../AtmForm/AtmFormContainer'
+import BrandsCategoryForm from '../BrandsCategoryForm/BrandsCategoryFormContainer'
 
 const MapMenuDrower: React.FC<MapMenuDrowerPropsType> = (props) => {
 
@@ -69,7 +70,7 @@ export default MapMenuDrower
 type MapMenuDrowerPropsType = {
     isDrawerVisible: false | string
     getDawerVisible: (isDrawerVisible: false | string) => void
-    setCenter: (coordinates: CoordinatesType) => void
+    setCenter: (coordinates: CoordinatesType, data?: InfoWindowDataType) => void
     setRoute: (coordinates: CoordinatesType) => void
     myCoords: CoordinatesType
     getRoutes: (routesResp: any) => void

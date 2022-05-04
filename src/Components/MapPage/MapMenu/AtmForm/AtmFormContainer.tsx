@@ -3,6 +3,7 @@ import { AppStateType } from '../../../../Redux/store'
 import { addSuccess, addError } from '../../../../Redux/messageReducer'
 import AtmForm from './AtmForm'
 import { CoordinatesType } from '../../../../Redux/mapReducer'
+import { InfoWindowDataType } from '../../GoogleMapsReact/TestMap'
 
 type MapPropsType = ReturnType<typeof mapStateToProps>
 
@@ -12,7 +13,7 @@ type MapDispatchPropsType = {
 }
 
 type OwnAtmFormPropsType = {
-    setCenter: (coordinates: CoordinatesType) => void
+    setCenter: (coordinates: CoordinatesType, data?: InfoWindowDataType) => void
     setRoute: (coordinates: CoordinatesType) => void
     onClose: () => void
     myCoords: CoordinatesType
