@@ -3,8 +3,9 @@ import { Button, Row } from 'antd'
 import React from 'react'
 import { url } from '../../../../Api/API'
 import { AtmType } from '../../../../Redux/brendObjectReducer'
-import { DataRow, СardButtonsBlock } from '../../GoogleMapsReact/MapCard/MapCard'
+import { DataRow } from '../../GoogleMapsReact/MapCard/MapCard'
 import { AtmFormPropsType } from './AtmFormContainer'
+import СardButtonsBlock from './../../../../Blocks/СardButtonsBlock/СardButtonsBlockContainer'
 
 const AtmForm: React.FC<AtmFormPropsType> = (props) => {
 
@@ -38,6 +39,16 @@ const AtmForm: React.FC<AtmFormPropsType> = (props) => {
         })
     }
 
+    const onImageClick = (atm: any) => {
+        console.log(atm.address.latitude)
+        console.log(atm.address.longitude)
+        props.setCenter({
+            lat:parseFloat(atm.address.latitude),
+            lng:parseFloat(atm.address.longitude),
+        })
+        props.onClose()
+    }
+
 
     return (
         <>
@@ -45,10 +56,12 @@ const AtmForm: React.FC<AtmFormPropsType> = (props) => {
                 return (
                     <div className='m-2 border'>
                         <Row className='m-2'>
-                            <h5 className="text-center">
+                            {/* <h5 className="text-center">
                                 {atm.title}
-                            </h5>
-
+                            </h5> */}
+                            <Button type="text" onClick={()=>onImageClick(atm)}>
+                                <h5>{atm.title}</h5>
+                            </Button>
                         </Row>
 
                         {!atm.address && console.log('!!!', atm.address)}
@@ -61,16 +74,22 @@ const AtmForm: React.FC<AtmFormPropsType> = (props) => {
                             />
                         }
 
-                        <СardButtonsBlock className='m-3'>
+                        <СardButtonsBlock 
+                            onGetGoogleLink={onGetGoogleLink}
+                            onNavi={onNavi}
+                            target={atm}
+                        />
+
+                        {/* <СardButtonsBlock className='m-3'>
                             <Button onClick={() => {
                                 onGetGoogleLink(atm)
                             }} className='mx-2' type="dashed" shape="circle" icon={<img src={url + "ico_navi/svg/link.svg"} alt="" />} size="large" />
                             <Button
                                 onClick={() => { onNavi(atm) }}
-                                className='mx-2' type="ghost" shape="circle" icon={<img src={url + "ico_navi/123/to_map.svg"} alt="" />} size="large" />
+                                className='mx-2' type="ghost" shape="circle" icon={<img src={url + "ico_navi/123/to_map.svg"} alt="" />} size="large" /> */}
                             {/* <Button className='mx-2' type="primary" shape="circle" icon={<img src={url+"ico_navi/123/to_map.svg"} alt="" />} size="large" /> */}
                             {/* <Button className='mx-2' type="default" shape="circle" icon={<img src={url+"ico_navi/svg/navi.svg"} alt="" />} size="large" /> */}
-                        </СardButtonsBlock>
+                        {/* </СardButtonsBlock> */}
 
                     </div>
                 )

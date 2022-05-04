@@ -3,8 +3,9 @@ import { BrandsCategoryFormPropsType } from './BrandsCategoryFormContainer'
 import './BrandsCategoryForm.css'
 import { Button, Col, Rate, Row } from 'antd'
 import { url } from '../../../../Api/API'
-import { DataRow, СardButtonsBlock } from './../../GoogleMapsReact/MapCard/MapCard'
+import { DataRow } from './../../GoogleMapsReact/MapCard/MapCard'
 import { HomeFilled, StarFilled } from '@ant-design/icons'
+import СardButtonsBlock from './../../../../Blocks/СardButtonsBlock/СardButtonsBlockContainer'
 
 
 const BrandsCategoryForm: React.FC<BrandsCategoryFormPropsType> = (props) => {
@@ -135,16 +136,22 @@ const BrandsCategoryForm: React.FC<BrandsCategoryFormPropsType> = (props) => {
                             data={'12.6 km'}
                         />
 
-                        <СardButtonsBlock className='m-3'>
+                        <СardButtonsBlock
+                            onGetGoogleLink={onGetGoogleLink}
+                            onNavi={onNavi}
+                            target={brendObject}
+                        />
+
+                        {/* <СardButtonsBlock className='m-3'>
                             <Button onClick={()=>{
                                 onGetGoogleLink(brendObject)
                             }} className='mx-2' type="dashed" shape="circle" icon={<img src={url+"ico_navi/svg/link.svg"} alt="" />} size="large" />
                             <Button 
                                 onClick={()=>{onNavi(brendObject)}}
-                                className='mx-2' type="ghost" shape="circle" icon={<img src={url+"ico_navi/123/to_map.svg"} alt="" />} size="large" />
+                                className='mx-2' type="ghost" shape="circle" icon={<img src={url+"ico_navi/123/to_map.svg"} alt="" />} size="large" /> */}
                             {/* <Button className='mx-2' type="primary" shape="circle" icon={<img src={url+"ico_navi/123/to_map.svg"} alt="" />} size="large" /> */}
                             {/* <Button className='mx-2' type="default" shape="circle" icon={<img src={url+"ico_navi/svg/navi.svg"} alt="" />} size="large" /> */}
-                        </СardButtonsBlock>
+                        {/* </СardButtonsBlock> */}
                     </div>
                 )
             })}

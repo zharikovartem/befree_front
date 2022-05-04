@@ -17,6 +17,9 @@ const AtmCard:React.FC<MapCardPropsType & AtmCardPropsType> = (props) => {
         <>
             <Row>
                 <h5>{props.atmData?.title}</h5>
+                {/* <Button type="text" onClick={()=>console.log('!!!')}>
+                    <h5>{props.atmData?.title}</h5>
+                </Button> */}
             </Row>
 
             {props.atmData?.address &&<DataRow label="" data={props.atmData?.address.data}
