@@ -37,9 +37,11 @@ const Toolbar: React.FC<ToolbarPropsType> = (props) => {
                     <SideMenu click={props.drawerToggleClickHandler} />
                 </div> */}
                 <ToolbarLogo className="toolbar_logo">
-                    <Link to="/">
+                    {/* <Link to="/"> */}
+                    <a href='https://befree.com/'>
                         <img src={url+'build/site/images/logo/logo.svg'} alt='BeFree' />
-                    </Link>
+                    </a>
+                    {/* </Link> */}
                 </ToolbarLogo>
                 <div className="spacer" />
 

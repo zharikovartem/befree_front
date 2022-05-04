@@ -2,7 +2,7 @@ import { Button } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 import { url } from '../../Api/API'
-import { СardButtonsBlockPropsType } from './СardButtonsBlockContainer'
+// import { СardButtonsBlockPropsType } from './СardButtonsBlockContainer'
 
 export const СardButtonsDiv = styled.div`
     background-color: #ecebeb;
@@ -54,6 +54,8 @@ const СardButtonsBlock: React.FC<СardButtonsBlockPropsType> = (props) => {
 
 export default СardButtonsBlock
 
-// type СardButtonsBlockPropsType = {
-
-// }
+type СardButtonsBlockPropsType = {
+    target: any
+    onGetGoogleLink: (brendObject: any) => void
+    onNavi: (brendObject: any) => void
+}

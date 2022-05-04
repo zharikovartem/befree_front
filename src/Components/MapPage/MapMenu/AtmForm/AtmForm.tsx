@@ -5,7 +5,7 @@ import { url } from '../../../../Api/API'
 import { AtmType } from '../../../../Redux/brendObjectReducer'
 import { DataRow } from '../../GoogleMapsReact/MapCard/MapCard'
 import { AtmFormPropsType } from './AtmFormContainer'
-import СardButtonsBlock from './../../../../Blocks/СardButtonsBlock/СardButtonsBlockContainer'
+import СardButtonsBlock from './../../../../Blocks/СardButtonsBlock/СardButtonsBlock'
 
 const AtmForm: React.FC<AtmFormPropsType> = (props) => {
 

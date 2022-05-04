@@ -5,7 +5,7 @@ import { Button, Col, Rate, Row } from 'antd'
 import { url } from '../../../../Api/API'
 import { DataRow } from './../../GoogleMapsReact/MapCard/MapCard'
 import { HomeFilled, StarFilled } from '@ant-design/icons'
-import СardButtonsBlock from './../../../../Blocks/СardButtonsBlock/СardButtonsBlockContainer'
+import СardButtonsBlock from './../../../../Blocks/СardButtonsBlock/СardButtonsBlock'
 
 
 const BrandsCategoryForm: React.FC<BrandsCategoryFormPropsType> = (props) => {

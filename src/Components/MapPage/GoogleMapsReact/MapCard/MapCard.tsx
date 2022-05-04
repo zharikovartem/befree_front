@@ -9,12 +9,13 @@ import { useDispatch } from 'react-redux'
 import { addSuccess } from '../../../../Redux/messageReducer'
 import AtmCard from '../AtmCard/AtmCard'
 import { AtmType } from '../../../../Redux/brendObjectReducer'
+import СardButtonsBlock from './../../../../Blocks/СardButtonsBlock/СardButtonsBlock'
 
-export const СardButtonsBlock = styled.div`
-    background-color: #ecebeb;
-    padding: 20px;
-    border-radius: 10px;
-`
+// export const СardButtonsBlock = styled.div`
+//     background-color: #ecebeb;
+//     padding: 20px;
+//     border-radius: 10px;
+// `
 
 
 
@@ -149,7 +150,13 @@ const MapCard: React.FC<MapCardPropsType> = (props) => {
 
             }
 
-            <СardButtonsBlock>
+            <СardButtonsBlock 
+                onNavi={onNavi}
+                onGetGoogleLink={onGetGoogleLink}
+                target={props.markerData}
+            />
+
+            {/* <СardButtonsBlock>
                 <Button
                     onClick={onGetGoogleLink}
                     className='mx-3 onCoordinatesCopy'
@@ -184,10 +191,10 @@ const MapCard: React.FC<MapCardPropsType> = (props) => {
                         />
                     }
                     size="large"
-                />
+                /> */}
                 {/* <Button className='mx-3' type="primary" shape="circle" icon={<img src={url + "ico_navi/123/to_map.svg"} alt="" />} size="large" /> */}
                 {/* <Button onClick={onNavi} className='mx-3' type="default" shape="circle" icon={<img src={url + "ico_navi/svg/navi.svg"} alt="" />} size="large" /> */}
-            </СardButtonsBlock>
+            {/* </СardButtonsBlock> */}
         </>
     )
 }

@@ -420,7 +420,6 @@ const MapWithADirectionsRenderer = compose(
 
         if (isShowInfoWindow) {
             console.log(isShowInfoWindow)
-            alert('isShowInfoWindow')
             setIsWaitingMarkerData(isShowInfoWindow)
         }
     }
