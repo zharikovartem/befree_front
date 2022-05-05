@@ -1,11 +1,13 @@
 import React from 'react'
 import { Form, Input, Button, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { LoginPropsType } from './LoginContainer'
 
 const Login: React.FC<LoginPropsType> = (props) => {
 
     const onFinish = (values: any) => {
         console.log('Success:', values);
+        props.loginCheck(values)
     }
 
     const onFinishFailed = (errorInfo: any) => {
@@ -37,9 +39,9 @@ const Login: React.FC<LoginPropsType> = (props) => {
                 />
             </Form.Item>
             <Form.Item>
-                <Form.Item name="remember" valuePropName="checked" noStyle>
+                {/* <Form.Item name="remember" valuePropName="checked" noStyle>
                     <Checkbox>Remember me</Checkbox>
-                </Form.Item>
+                </Form.Item> */}
 
                 <a className="login-form-forgot" href="">
                     Forgot password
@@ -74,6 +76,6 @@ const Login: React.FC<LoginPropsType> = (props) => {
 
 export default Login
 
-type LoginPropsType = {
+// type LoginPropsType = {
 
-}
+// }

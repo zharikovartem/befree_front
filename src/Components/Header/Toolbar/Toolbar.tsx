@@ -7,7 +7,7 @@ import LoginButton from '../../../Elements/Buttons/LoginButton/LoginButtonContai
 import MenuData from './MenuData/MenuData'
 import CustomSelect from '../../../Elements/Selects/CustomSelect/CustomSelectContainer'
 import styled from 'styled-components'
-import Login from '../../Login/Login'
+import Login from '../../Login/LoginContainer'
 import { url } from '../../../Api/API'
 
 const ToolbarLogo = styled.div`
@@ -51,7 +51,7 @@ const Toolbar: React.FC<ToolbarPropsType> = (props) => {
 
                 {/* <CustomSelect /> */}
 
-                {/* <LoginButton 
+                <LoginButton 
                     title='Login' 
                     src='login' 
                     type='modal'
@@ -59,7 +59,7 @@ const Toolbar: React.FC<ToolbarPropsType> = (props) => {
                         title: 'Login'
                     }}
                     modalComponent={Login}
-                /> */}
+                />
 
                 <div className="toggle-btn">
                     <SideMenu click={props.drawerToggleClickHandler} />

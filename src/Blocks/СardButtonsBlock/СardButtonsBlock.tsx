@@ -2,7 +2,6 @@ import { Button } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 import { url } from '../../Api/API'
-// import { СardButtonsBlockPropsType } from './СardButtonsBlockContainer'
 
 export const СardButtonsDiv = styled.div`
     background-color: #ecebeb;
@@ -25,8 +24,7 @@ const СardButtonsBlock: React.FC<СardButtonsBlockPropsType> = (props) => {
                 className='mx-2'
                 type="dashed"
                 shape="circle"
-                icon={<img src={url + "ico_navi/svg/link.svg"}
-                    alt="" />}
+                icon={<img src={url + "ico_navi/svg/link.svg"} alt="" />}
                 size="large"
             />
             <Button

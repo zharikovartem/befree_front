@@ -9,7 +9,7 @@ export let instance = axios.create({
     baseURL: url,
     headers: {
         Authorization: 'Bearer ' + localStorage.getItem('apikey'),
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/json',
         'Accept': "application/json"
     }
 })
