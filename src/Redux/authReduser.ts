@@ -4,11 +4,11 @@ import { addSuccess, messageActions } from './messageReducer'
 import { BaseThunkType, InferActionsTypes } from './store'
 
 export type InitialStateType ={
-    test: boolean
+    isAuth: boolean
 }
 
 let initialState:InitialStateType = {
-    test: false
+    isAuth: false
 }
 
 type ActionsType = InferActionsTypes<typeof actions>
@@ -18,7 +18,7 @@ const authReducer = (state = initialState, action: ActionsType): InitialStateTyp
         case 'AUTH/TEST':
             return {
                     ...state,
-                    test: action.test
+                    isAuth: action.isAuth
             }
         default:
             return state;
@@ -26,7 +26,7 @@ const authReducer = (state = initialState, action: ActionsType): InitialStateTyp
 }
 
 export const actions = {
-    setAction: (test: boolean) => ({type: 'AUTH/TEST', test} as const),
+    setAuth: (isAuth: boolean) => ({type: 'AUTH/TEST', isAuth} as const),
 }
 
 export const loginCheck = (data:LoginDataType): ThunkType => {
@@ -34,8 +34,8 @@ export const loginCheck = (data:LoginDataType): ThunkType => {
         const response = await authAPI.loginCheck(data)
         console.log(response);
         
-        if (response.token) {
-            localStorage.setItem('apikey', response.token);
+        if (response.status === 200) {
+            localStorage.setItem('apikey', response.data.token);
             console.log(response)
             // addToken(response.token)
             dispatch( addSuccess('OK') )

@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux'
+import { refreshToken } from '../Api/API'
 import { categoryAPI } from '../Api/categoryApi'
 import { BaseThunkType, InferActionsTypes } from './store'
 
@@ -54,8 +55,12 @@ export const changeCategoryFilter = (categoryFilter: number[]): ThunkType => {
 export const getActiveCategoryes = (): ThunkType => {
     return async (dispatch, getState) => {
         const response = await categoryAPI.getActiveCategoryes()
-        if (response) {
+        if (response.status === 200) {
             dispatch( actions.setCategoyes(response.data) )
+        } else {
+            localStorage.removeItem('apikey')
+            refreshToken()
+            // dispatch(getActiveCategoryes())
         }
     }
 }

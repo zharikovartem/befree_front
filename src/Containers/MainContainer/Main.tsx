@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import Header from '../../Components/Header/HeaderContainer'
 import { MainPropsType } from './MainContainer'
 import { message, Button, Space } from 'antd'
+import { refreshToken } from '../../Api/API'
 
 const Main:React.FC<MainPropsType> = (props) => {
 
@@ -12,6 +13,10 @@ const Main:React.FC<MainPropsType> = (props) => {
     useEffect(() => {
         props.error[0] && error(props.error[0])
     }, [props.error]);
+
+    useEffect(() => {
+        !props.isAuth && localStorage.removeItem('apikey') && refreshToken()
+    }, [props.isAuth]);
 
     const success = (value: string) => {
         console.log('success: ', value)

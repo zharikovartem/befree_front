@@ -4,7 +4,7 @@ import axios from 'axios'
 export const url = 'https://befree.com/'
 // export const url = 'http://localhost:8080/'
 
-export let instance = axios.create({
+export let instance = localStorage.getItem('apikey') ? axios.create({
     withCredentials: false,
     baseURL: url,
     headers: {
@@ -12,4 +12,38 @@ export let instance = axios.create({
         'Content-Type': 'application/json',
         'Accept': "application/json"
     }
-})
+}) 
+:
+axios.create({
+    withCredentials: false,
+    baseURL: url,
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': "application/json"
+    }
+}) 
+
+export const refreshToken = () => {
+    const token = localStorage.getItem('apikey')
+
+    if (token) {
+        instance = axios.create({
+            withCredentials: false,
+            baseURL: url,
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('apikey'),
+                'Content-Type': 'multipart/form-data',
+                'Accept': "application/json"
+            }
+        })
+    } else {
+        instance = axios.create({
+            withCredentials: false,
+            baseURL: url,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Accept': "application/json"
+            }
+        })
+    }
+}

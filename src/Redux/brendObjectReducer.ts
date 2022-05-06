@@ -97,7 +97,7 @@ export const getBrendObjectsByBounds = (params: GetBrendObjectsByBoundsParamsTyp
         // params.category = [...categoryFilter]
         console.log('categoryFilter', categoryFilter)
         const response = await brendObjectAPI.getBrendObjectsByBounds(params, categoryFilter)
-        if (response) {
+        if (response.status === 200) {
             dispatch( actions.setBrendObjects(response.data.brandObjects, response.data.atm) )
         }
     }
@@ -106,7 +106,7 @@ export const getBrendObjectsByBounds = (params: GetBrendObjectsByBoundsParamsTyp
 export const getNearestBrendObjects = (params:GetNearestBrendObjectsParamsType): ThunkType => {
     return async (dispatch, getState) => {
         const response = await brendObjectAPI.getNearestBrendObjects(params)
-        if (response) {
+        if (response.status === 200) {
             console.log('getNearestBrendObjects', response)
             dispatch( actions.setBrendObjectsMenuList(response.data.brandObjects, response.data.atm) )
         }
