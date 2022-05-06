@@ -20,6 +20,7 @@ then
     # echo 'zharikovartem'
     # echo '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'
     git push
+    # git push https://name:password@github.com/repo.git
 fi
 
 npm run build
