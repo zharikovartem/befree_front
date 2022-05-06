@@ -14,6 +14,9 @@ then
         commit="no name"
     fi
 
+    npm run build
+    scp -r ./build/* root@164.90.153.196:/var/www/befree/app/public/befree_front
+
     git add .
     git commit -m "${commit}"
     # echo '7383125@mail.ru'
@@ -23,10 +26,10 @@ then
     # git push https://name:password@github.com/repo.git
 fi
 
-npm run build
+
 
 # echo  -e '\e[30;48;5;82m password: \e[0;49m derect123##!' 
-scp -r ./build/* root@164.90.153.196:/var/www/befree/app/public/befree_front
+
 # pass: derect123##!
 # cd ./../var/www/crm_front_new
 
