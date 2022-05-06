@@ -2,6 +2,7 @@ import React from 'react'
 import { Form, Input, Button, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { LoginPropsType } from './LoginContainer'
+import GoogleLogin from 'react-google-login'
 
 const Login: React.FC<LoginPropsType> = (props) => {
 
@@ -14,62 +15,75 @@ const Login: React.FC<LoginPropsType> = (props) => {
         console.log('Failed:', errorInfo);
     }
 
+    const responseGoogle = (response: any) => {
+        console.log(response);
+    }
+
     return (
         <div className='container'>
-        <Form
-            name="normal_login"
-            className="login-form"
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
-        >
-            <Form.Item
-                name="username"
-                rules={[{ required: true, message: 'Please input your Username!' }]}
+            <Form
+                name="normal_login"
+                className="login-form"
+                initialValues={{ remember: true }}
+                onFinish={onFinish}
             >
-                <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-            </Form.Item>
-            <Form.Item
-                name="password"
-                rules={[{ required: true, message: 'Please input your Password!' }]}
-            >
-                <Input
-                    prefix={<LockOutlined className="site-form-item-icon" />}
-                    type="password"
-                    placeholder="Password"
-                />
-            </Form.Item>
-            <Form.Item>
-                {/* <Form.Item name="remember" valuePropName="checked" noStyle>
+                <Form.Item
+                    name="username"
+                    rules={[{ required: true, message: 'Please input your Username!' }]}
+                >
+                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+                </Form.Item>
+                <Form.Item
+                    name="password"
+                    rules={[{ required: true, message: 'Please input your Password!' }]}
+                >
+                    <Input
+                        prefix={<LockOutlined className="site-form-item-icon" />}
+                        type="password"
+                        placeholder="Password"
+                    />
+                </Form.Item>
+                <Form.Item>
+                    {/* <Form.Item name="remember" valuePropName="checked" noStyle>
                     <Checkbox>Remember me</Checkbox>
                 </Form.Item> */}
 
-                <a className="login-form-forgot" href="">
-                    Forgot password
-                </a>
-            </Form.Item>
+                    <a className="login-form-forgot" href="">
+                        Forgot password
+                    </a>
+                </Form.Item>
 
-            <Form.Item>
-                <Button type="primary" htmlType="submit" className="login-form-button">
-                    Login
-                </Button>                
-            </Form.Item>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit" className="login-form-button">
+                        Login
+                    </Button>
+                </Form.Item>
 
-            <Form.Item>
-                <Button type="ghost" className="mx-3">
-                    Google
-                </Button>
-                <Button type="ghost" className="mx-3">
-                    Facebook
-                </Button>
-                <Button type="ghost" className="mx-3">
-                    Twitter
-                </Button>
-            </Form.Item>
+                <Form.Item>
+                    <Button type="ghost" className="mx-3">
+                        Google
+                    </Button>
 
-            <Form.Item>
-                Or <a href="">register now!</a>
-            </Form.Item>
-        </Form>
+                    <GoogleLogin
+                        clientId="259617516382-mtqgm6d9c7n60h9cmpfluiscare8ioa3.apps.googleusercontent.com"
+                        buttonText="Login"
+                        onSuccess={responseGoogle}
+                        onFailure={responseGoogle}
+                        cookiePolicy={'single_host_origin'}
+                    />
+
+                    <Button type="ghost" className="mx-3">
+                        Facebook
+                    </Button>
+                    <Button type="ghost" className="mx-3">
+                        Twitter
+                    </Button>
+                </Form.Item>
+
+                <Form.Item>
+                    Or <a href="">register now!</a>
+                </Form.Item>
+            </Form>
         </div>
     )
 }
