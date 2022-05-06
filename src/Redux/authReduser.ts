@@ -15,7 +15,7 @@ type ActionsType = InferActionsTypes<typeof actions>
 
 const authReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
-        case 'AUTH/TEST':
+        case 'AUTH/SET_AUTH':
             return {
                     ...state,
                     isAuth: action.isAuth
@@ -26,7 +26,7 @@ const authReducer = (state = initialState, action: ActionsType): InitialStateTyp
 }
 
 export const actions = {
-    setAuth: (isAuth: boolean) => ({type: 'AUTH/TEST', isAuth} as const),
+    setAuth: (isAuth: boolean) => ({type: 'AUTH/SET_AUTH', isAuth} as const),
 }
 
 export const loginCheck = (data:LoginDataType): ThunkType => {
@@ -38,6 +38,8 @@ export const loginCheck = (data:LoginDataType): ThunkType => {
             localStorage.setItem('apikey', response.data.token);
             console.log(response)
             // addToken(response.token)
+            
+            dispatch( actions.setAuth(true) )
             dispatch( addSuccess('OK') )
             // console.log('dispatch(tokenCheck())');
             // dispatch(tokenCheck())

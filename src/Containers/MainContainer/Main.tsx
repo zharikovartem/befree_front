@@ -15,7 +15,9 @@ const Main:React.FC<MainPropsType> = (props) => {
     }, [props.error]);
 
     useEffect(() => {
-        !props.isAuth && localStorage.removeItem('apikey') && refreshToken()
+        console.log('Main useEffect props.isAuth', props.isAuth)
+        !props.isAuth && localStorage.removeItem('apikey') 
+        refreshToken()
     }, [props.isAuth]);
 
     const success = (value: string) => {

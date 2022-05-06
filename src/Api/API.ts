@@ -32,7 +32,7 @@ export const refreshToken = () => {
             baseURL: url,
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('apikey'),
-                'Content-Type': 'multipart/form-data',
+                'Content-Type': 'application/json',
                 'Accept': "application/json"
             }
         })
@@ -41,7 +41,7 @@ export const refreshToken = () => {
             withCredentials: false,
             baseURL: url,
             headers: {
-                'Content-Type': 'multipart/form-data',
+                'Content-Type': 'application/json',
                 'Accept': "application/json"
             }
         })
