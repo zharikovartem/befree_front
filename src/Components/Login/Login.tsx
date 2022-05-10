@@ -2,9 +2,15 @@ import React from 'react'
 import { Form, Input, Button, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { LoginPropsType } from './LoginContainer'
-import GoogleLogin from 'react-google-login'
+import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login'
 import FacebookLogin from 'react-facebook-login'
 import TwitterLogin from 'react-twitter-login'
+
+export type SotialLoginDataType = {
+    userName: string
+    password: string
+
+}
 
 const Login: React.FC<LoginPropsType> = (props) => {
 
@@ -17,8 +23,15 @@ const Login: React.FC<LoginPropsType> = (props) => {
         console.log('Failed:', errorInfo);
     }
 
-    const responseGoogle = (response: any) => {
-        console.log('responseGoogle', response)
+    const responseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline ) => {
+        
+        console.log(response)
+        // !response.code && console.log(response.isSignedIn())
+        
+        // @ts-ignore
+        if (response instanceof GoogleLoginResponse) {
+            console.log(response)
+        }
     }
 
     const responseFacebook = (response: any) => {
