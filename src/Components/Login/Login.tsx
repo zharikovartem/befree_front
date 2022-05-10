@@ -96,11 +96,11 @@ const Login: React.FC<LoginPropsType> = (props) => {
                     {/* <Button type="ghost" className="mx-3">
                         Twitter
                     </Button> */}
-                    <TwitterLogin
+                    {/* <TwitterLogin
                         authCallback={responseTwitter}
                         consumerKey={'KUWZqSDTKRjetfpSoMrwu81CT'}
                         consumerSecret={'DdijnbdTeYyVUE0FkKa08aNR8ORuvCiEMEIJVd4JWMY3Q4e2V8'}
-                    />
+                    /> */}
                 </Form.Item>
 
                 <Form.Item>
