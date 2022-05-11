@@ -12,6 +12,7 @@ export type SotialLoginDataType = {
     token: string
     type: 'Google' | 'Facebook'
     password?: string
+    fullName?: string
 }
 
 const Login: React.FC<LoginPropsType> = (props) => {
@@ -34,7 +35,8 @@ const Login: React.FC<LoginPropsType> = (props) => {
                 username: response.profileObj.email,
                 password: response.accessToken,
                 token: response.accessToken,
-                type: 'Google'
+                type: 'Google',
+                fullName: response.profileObj.name
             }
             console.log('userData', userData)
             props.socialAuth(userData)
@@ -49,7 +51,8 @@ const Login: React.FC<LoginPropsType> = (props) => {
                 username: response.email,
                 password: response.accessToken,
                 token: response.accessToken,
-                type: 'Facebook'
+                type: 'Facebook',
+                fullName: response.name
             }
             console.log('userData', userData)
             props.socialAuth(userData)
