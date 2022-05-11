@@ -3,13 +3,15 @@ import { Form, Input, Button, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { LoginPropsType } from './LoginContainer'
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login'
-import FacebookLogin from 'react-facebook-login'
+import FacebookLogin, { ReactFacebookFailureResponse, ReactFacebookLoginInfo } from 'react-facebook-login'
 import TwitterLogin from 'react-twitter-login'
+import { LoginDataType } from '../../Api/authApi'
 
 export type SotialLoginDataType = {
-    userName: string
-    password: string
-
+    username: string
+    token: string
+    type: 'Google' | 'Facebook'
+    password?: string
 }
 
 const Login: React.FC<LoginPropsType> = (props) => {
@@ -26,16 +28,32 @@ const Login: React.FC<LoginPropsType> = (props) => {
     const responseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline ) => {
         
         console.log(response)
-        // !response.code && console.log(response.isSignedIn())
-        
-        // @ts-ignore
-        if (response instanceof GoogleLoginResponse) {
-            console.log(response)
+
+        if ("accessToken" in response) {
+            const userData: SotialLoginDataType = {
+                username: response.profileObj.email,
+                password: response.accessToken,
+                token: response.accessToken,
+                type: 'Google'
+            }
+            console.log('userData', userData)
+            props.socialAuth(userData)
         }
     }
 
-    const responseFacebook = (response: any) => {
+    const responseFacebook = (response: ReactFacebookLoginInfo | ReactFacebookFailureResponse ) => {
         console.log('responseFacebook', response)
+
+        if ("accessToken" in response && response.email) {
+            const userData: SotialLoginDataType = {
+                username: response.email,
+                password: response.accessToken,
+                token: response.accessToken,
+                type: 'Facebook'
+            }
+            console.log('userData', userData)
+            props.socialAuth(userData)
+        }
     }
 
     const responseTwitter = () => {

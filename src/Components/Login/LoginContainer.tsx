@@ -1,13 +1,14 @@
 import {connect} from 'react-redux'
 import { LoginDataType } from '../../Api/authApi'
 import { AppStateType } from '../../Redux/store'
-import { loginCheck } from './../../Redux/authReduser'
-import Login from './Login'
+import { loginCheck, socialAuth } from './../../Redux/authReduser'
+import Login, { SotialLoginDataType } from './Login'
 
 type MapPropsType = ReturnType<typeof mapStateToProps>
 
 type MapDispatchPropsType = {
     loginCheck: (data: LoginDataType) => void
+    socialAuth: (data: SotialLoginDataType) => void
 }
 
 type OwnLoginPropsType = {
@@ -23,6 +24,6 @@ let mapStateToProps = (state: AppStateType) => {
 }
 
 export default connect<MapPropsType, MapDispatchPropsType, OwnLoginPropsType, AppStateType>(mapStateToProps,
-    { loginCheck }
+    { loginCheck, socialAuth }
 )
     (Login)

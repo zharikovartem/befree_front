@@ -1,12 +1,12 @@
 import {connect} from 'react-redux'
 import { AppStateType } from '../../Redux/store'
-//import { AppStateType } from './../Redux/store'
+import { checkAuth } from './../../Redux/authReduser'
 import Main from './Main'
 
 type MapPropsType = ReturnType<typeof mapStateToProps>
 
 type MapDispatchPropsType = {
-    
+    checkAuth: () => void
 }
 
 type OwnMainPropsType = {
@@ -24,6 +24,6 @@ let mapStateToProps = (state: AppStateType) => {
 }
 
 export default connect<MapPropsType, MapDispatchPropsType, OwnMainPropsType, AppStateType>(mapStateToProps,
-    {}
+    { checkAuth }
 )
     (Main)
