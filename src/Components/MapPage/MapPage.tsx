@@ -45,7 +45,7 @@ const MapPage: React.FC<MapPagePropsType> = (props) => {
         let category: number[] = []
         categoryId && category.push(parseInt(categoryId))
 
-        // alert(ev.key)
+        console.log('myCoords MapPage', myCoords)
 
         myCoords && props.getNearestBrendObjects({
             lat: myCoords.lat,

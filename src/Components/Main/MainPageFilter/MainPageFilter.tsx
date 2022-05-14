@@ -13,7 +13,6 @@ const MainPageFilter: React.FC<MainPageFilterPropsType> = (props) => {
     
     return (
         <>
-            {/* MainPageFilter   */}
             <Formik
                 initialValues={{}}
                 // initialValues={initialFormValues}

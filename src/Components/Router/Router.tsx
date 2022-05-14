@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import MainContainer from '../../Containers/MainContainer/MainContainer'
+import CreateObject from '../CreateObject/CreateObjectContainer'
 import MainPage from '../Main/MainPage'
 import TestMap from '../MapPage/GoogleMapsReact/TestMap'
 import MapPage from '../MapPage/MapPageContainer'
@@ -21,9 +22,9 @@ const Router: React.FC<RouterPropsType> = (props) => {
                         <Route index element={<>LeagueStandings</>} />
                     </Route> */}
                 </Route>
-                <Route path="/testmap" element={<MapPage />}>
+                <Route path="/testmap" element={<MapPage />} />
 
-                </Route>
+                <Route path="/create_object" element={<CreateObject />} />
 
                 <Route path="/map" element={
                     <TestMapPage />

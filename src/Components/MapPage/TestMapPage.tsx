@@ -47,12 +47,28 @@ const TestMapPage: React.FC<TestMapPagePropsType> = (props) => {
     // }, [props.categoryFilter, props.markers]);
 
     const getLocation = () => {
-        if (!navigator.geolocation) { } else {
+        if (!navigator.geolocation) {
+            setMyCoords({
+                lat: 53.9416502,
+                lng: 27.686863
+            })
+        } else {
             navigator.geolocation.getCurrentPosition((position) => {
-                setMyCoords({
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                })
+                if (position.coords &&
+                    position.coords.latitude &&
+                    position.coords.longitude
+                ) {
+                    setMyCoords({
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    })
+                } else {
+                    setMyCoords({
+                        lat: 53.9416502,
+                        lng: 27.686863
+                    })
+                }
+                
             }, () => { });
         }
     }

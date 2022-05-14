@@ -31,16 +31,16 @@ const MainPage:React.FC<MainPagePropsType> = (props) => {
                 // filter={<>MainPageFilter</>}
             /> */}
             
-            {myCoords && <div><GoogleMapsReact 
+            {/* {myCoords && <div><GoogleMapsReact 
                 initialCenter={myCoords}
-            /></div>}
+            /></div>} */}
             <div
                 style={{
                     zIndex:100,
                     position: 'absolute'
                 }}
             >
-                123456
+                MainPage
             </div>
         </>
     )
