@@ -1,4 +1,4 @@
-import { Col, Input, Row, InputNumber, Select, Space } from 'antd'
+import { Col, Input, Row, InputNumber, Select, Space, Button } from 'antd'
 import { Field } from 'formik'
 import React from 'react'
 
@@ -23,9 +23,9 @@ const FormRow: React.FC<FormRowPropsType> = (props) => {
     return (
         <Row>
             <Col xs={24} span={12}>
-                {props.label}
+                {props.label}:
             </Col>
-            <Col xs={24} span={12}>
+            <Col xs={props.isButton ? 18 : 24} span={12}>
             <Space direction="vertical" style={{ width: '100%' }}>
                 <Field
                     component={getComponent()}
@@ -39,13 +39,18 @@ const FormRow: React.FC<FormRowPropsType> = (props) => {
                     styled={{ with: '100%' }}
                 >
                     {props.type === 'select' ?
-                        <option value="">Sity list</option>
+                        props.selectOptions ? props.selectOptions : <option value="">Sity list</option>
                         : 
                         null
                     }
                 </Field>
                 </Space>
             </Col>
+            {props.isButton && 
+                <Col xs={4}>
+                    <Button type='primary'>Add</Button>
+                </Col>
+            }
         </Row>
     )
 }
@@ -58,4 +63,6 @@ type FormRowPropsType = {
     placeholder?: string
     type: 'input' | 'inputNumber' | 'select' | 'switch' | 'textarea'
     submitCount?: any
+    isButton?: boolean
+    selectOptions?: any[]
 }

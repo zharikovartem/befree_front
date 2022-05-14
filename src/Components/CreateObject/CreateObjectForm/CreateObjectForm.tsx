@@ -1,4 +1,4 @@
-import { Col, Input, Row, Select, Switch } from 'antd'
+import { Button, Col, Input, Row, Select, Switch } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import { Field, Form, FormikProps } from 'formik'
 import React from 'react'
@@ -15,7 +15,7 @@ const CreateObjectForm: React.FC<FormikProps<CreateObjectFormPropsType>> = (prop
                 <Col xs={24} span={12}>
                     Brend
                 </Col>
-                <Col xs={24} span={12}>
+                <Col xs={18} span={12}>
                     <Field
                         component={Select}
                         name="Brend"
@@ -29,6 +29,9 @@ const CreateObjectForm: React.FC<FormikProps<CreateObjectFormPropsType>> = (prop
                     > 
                         <option value="">Brend list</option>
                     </Field>
+                </Col>
+                <Col xs={4}>
+                    <Button type='primary'>Add</Button>
                 </Col>
             </Row>
 

@@ -14,11 +14,23 @@ const AddressForm: React.FC<AddressFormPropsType> = (props) => {
         <Collapse defaultActiveKey={[]} onChange={callback} ghost>
             <Panel header="Address data" key="1">
                 <FormRow
-                    label='Street'
-                    name='street'
+                    label='Coutry'
+                    name='coutry'
+                    type='select'
+                    placeholder='Please, select coutry'
+                    submitCount={props.submitCount}
+                    isButton
+                    selectOptions={[
+                        <option value="">Coutry list</option>
+                    ]}
+                />
+                <FormRow
+                    label='Sity'
+                    name='sity'
                     type='select'
                     placeholder='Please, select sity'
                     submitCount={props.submitCount}
+                    isButton
                 />
                 <FormRow
                     label='Street'
