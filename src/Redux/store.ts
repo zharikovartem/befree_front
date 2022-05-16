@@ -1,14 +1,18 @@
 import {Action, applyMiddleware, combineReducers, createStore} from "redux"
 import thunkMiddleware, {ThunkAction} from "redux-thunk"
+import authReducer from "./authReduser"
 import brendObjectReducer from "./brendObjectReducer"
 import categoryReducer from "./categoryReducer"
 import mapReducer from "./mapReducer"
+import messageReducer from "./messageReducer"
 
 
 let rootReducer = combineReducers({
     mapReducer: mapReducer,
     categoryReducer: categoryReducer,
-    brendObjectReducer: brendObjectReducer
+    brendObjectReducer: brendObjectReducer,
+    messageReducer: messageReducer,
+    authReducer: authReducer
 })
 
 type rootReducerType = typeof rootReducer

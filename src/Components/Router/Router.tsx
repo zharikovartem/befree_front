@@ -1,10 +1,9 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import MainContainer from '../../Containers/MainContainer/MainContainer'
+import CreateObject from '../CreateObject/CreateObjectContainer'
 import MainPage from '../Main/MainPage'
-import TestMap from '../MapPage/GoogleMapsReact/TestMap'
-import MapPage from '../MapPage/MapPageContainer'
-import TestMapPage from '../MapPage/TestMapPageContainer'
+import TestMapPage from '../MapPage/MapPageContainer'
 
 const api = "AIzaSyArMpYW9CPdpuWvJwcn7C_1bPSr7aetxnI";
 
@@ -21,9 +20,8 @@ const Router: React.FC<RouterPropsType> = (props) => {
                         <Route index element={<>LeagueStandings</>} />
                     </Route> */}
                 </Route>
-                <Route path="/testmap" element={<MapPage />}>
 
-                </Route>
+                <Route path="/create_object" element={<CreateObject />} />
 
                 <Route path="/map" element={
                     <TestMapPage />

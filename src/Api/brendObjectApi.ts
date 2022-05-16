@@ -6,6 +6,7 @@ export type GetBrendObjectsByBoundsParamsType = {
     lngMax: number
     latMin: number
     latMax: number
+    category?: number[]
 }
 
 export type GetNearestBrendObjectsParamsType = {
@@ -19,10 +20,19 @@ export type GetNearestBrendObjectsParamsType = {
 
 export const brendObjectAPI = {
 
-    getBrendObjectsByBounds(params: GetBrendObjectsByBoundsParamsType) {
+    getBrendObjectsByBounds(params: GetBrendObjectsByBoundsParamsType, categoryFilter: number[]) {
         console.log(params);
-        const stringified = queryString.stringify(params);
+        let stringified: string = queryString.stringify(params);
+        const categoryFilterStr = queryString.stringify(categoryFilter);
+
+        
+        // console.log(categoryFilterStr);
+        categoryFilter.map(item=> {
+            stringified = stringified+ '&category[]='+item
+        })
+
         console.log(stringified);
+
         return instance.get('/api/brands/getByBounds?'+ stringified)
         .then(response => {
             return response
