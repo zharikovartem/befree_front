@@ -2,7 +2,7 @@ import {connect} from 'react-redux'
 import { CoordinatesType } from '../../../../Redux/mapReducer'
 import { addSuccess, addError } from '../../../../Redux/messageReducer'
 import { AppStateType } from '../../../../Redux/store'
-import { InfoWindowDataType } from '../../GoogleMapsReact/TestMap'
+import { InfoWindowDataType } from '../../GoogleMapsReact/GoogleMap'
 //import { AppStateType } from './../Redux/store'
 import BrandsCategoryForm from './BrandsCategoryForm'
 

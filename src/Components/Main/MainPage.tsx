@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Filter from '../../Containers/FilterContainer/FilterContainer'
-import GoogleMapsReact from '../MapPage/GoogleMapsReact/GoogleMapsReactContainer'
 import { MainPagePropsType } from './MainPageContainer'
-import MainPageFilter from './MainPageFilter/MainPageFilter'
 
 const MainPage:React.FC<MainPagePropsType> = (props) => {
 

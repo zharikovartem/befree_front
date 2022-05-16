@@ -3,7 +3,7 @@ import { AppStateType } from '../../../../Redux/store'
 import { addSuccess, addError } from '../../../../Redux/messageReducer'
 import AtmForm from './AtmForm'
 import { CoordinatesType } from '../../../../Redux/mapReducer'
-import { InfoWindowDataType } from '../../GoogleMapsReact/TestMap'
+import { InfoWindowDataType } from '../../GoogleMapsReact/GoogleMap'
 
 type MapPropsType = ReturnType<typeof mapStateToProps>
 
